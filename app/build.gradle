@@ -64,5 +64,5 @@ dependencies {
 
     // google map
     implementation "com.google.android.gms:play-services-maps:$play_services_version"
-
+    implementation "com.google.maps.android:maps-compose:$compose_maps_version"
 }
