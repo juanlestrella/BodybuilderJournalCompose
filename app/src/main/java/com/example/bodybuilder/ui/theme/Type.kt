@@ -1,4 +1,4 @@
-package com.example.mapscompose.ui.theme
+package com.example.bodybuilder.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

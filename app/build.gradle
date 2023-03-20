@@ -1,15 +1,14 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
-    namespace 'com.example.mapscompose'
+    namespace 'com.example.bodybuilder'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.mapscompose"
+        applicationId "com.example.bodybuilder"
         minSdk 24
         targetSdk 33
         versionCode 1
@@ -63,10 +62,6 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
-
-    // google map
-    implementation "com.google.android.gms:play-services-maps:$play_services_version"
-    implementation "com.google.maps.android:maps-compose:$compose_maps_version"
 
     // coil (image)
     implementation("io.coil-kt:coil-compose:2.2.2")

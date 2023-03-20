@@ -1,4 +1,4 @@
-package com.example.mapscompose
+package com.example.bodybuilder
 
 import org.junit.Test
 

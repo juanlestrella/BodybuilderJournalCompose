@@ -1,4 +1,4 @@
-package com.example.mapscompose.compose
+package com.example.bodybuilder.compose
 
 import android.content.Context
 import android.content.res.Configuration
@@ -28,11 +28,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.mapscompose.R
-import com.example.mapscompose.ui.theme.MapsComposeTheme
+import com.example.bodybuilder.R
+import com.example.bodybuilder.ui.theme.Bodybuilder
 
 
 /**
@@ -68,7 +69,7 @@ fun Home_Screen(
 @Composable
 fun LocationCard(
     modifier: Modifier = Modifier,
-    location: String = "Location Name"
+    location: String = "Date"
 ){
     Card(
         backgroundColor = MaterialTheme.colors.background,
@@ -92,8 +93,7 @@ fun ContentCard(
     modifier: Modifier = Modifier,
     @DrawableRes image: Int = R.drawable.baseline_smart_toy_24,
     description: String = "temp description",
-    title: String = "Caption",
-    date: String = "Date",
+    bodyPart: String = "Body part",
     context: Context = LocalContext.current
 ){
     val isClicked = remember { mutableStateOf(false) }
@@ -110,7 +110,9 @@ fun ContentCard(
         )
     Surface{
         Column(
-            modifier = modifier.padding(all = 4.dp)
+            modifier = modifier
+                .padding(all = 8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ){
             Card(
                 shape = CircleShape,
@@ -123,16 +125,17 @@ fun ContentCard(
                     modifier = imageModifier,
                 )
             }
-            Text(text = date)
-            Text(text = title)
+            Text(text = bodyPart)
         }
         if (isClicked.value){
             BoxImage(modifier, image)
         }
     }
-
 }
 
+/**
+ * this can be in another file and use navigation
+ */
 @Composable
 fun BoxImage(
     modifier: Modifier = Modifier,
@@ -173,7 +176,7 @@ fun BoxImage(
 @Preview(showBackground = true)
 @Composable
 fun Home_Screen_Preview(){
-    MapsComposeTheme {
+    Bodybuilder {
         Home_Screen()
     }
 }
