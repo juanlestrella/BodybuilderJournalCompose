@@ -10,10 +10,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bodybuilder.R
 import com.example.bodybuilder.ui.theme.Bodybuilder
+import java.nio.channels.FileChannel.MapMode
 
 
 /**
@@ -41,8 +39,9 @@ import com.example.bodybuilder.ui.theme.Bodybuilder
  * 0) Apply Card Effects
  * 0) Make each Card clickable
  *      0) -> make image zoom out once clicked
- *      -> create an "X" to close the image
- * 3) Implement Scaffold
+ * 0) Implement Scaffold
+ *      3.a) switch bottomBar to BottomNavigation
+ *      https://developer.android.com/reference/kotlin/androidx/compose/material/package-summary#bottomnavigation
  * 4) Implement network
  * 5) Implement entities and database
  * 6) Implement ViewModels
@@ -51,36 +50,75 @@ import com.example.bodybuilder.ui.theme.Bodybuilder
  */
 
 @Composable
-fun Home_Screen(
-    modifier: Modifier = Modifier
-) {
-    // make this clickable and go to more detailed page (navigation)
+fun Home_Screen() {
+    // can be used to show Snackbar, open/close drawer
+    val scaffoldState = rememberScaffoldState()
+    Scaffold(
+        scaffoldState = scaffoldState,
+        topBar = {
+            TopAppBar(
+                title = {Text("Home", color = Color.Red)},
+                backgroundColor = MaterialTheme.colors.background,
+            )
+        },
+        bottomBar = {
+            /**
+             * TODO: Change this to BottomNavigation later after creating all the screens
+             */
+            BottomAppBar(backgroundColor = MaterialTheme.colors.background) {
+                Text(text = "Bottom App Bar", color = Color.Red)
+            }
+        }
+    ){ contentPadding ->
+        BodyContent(contentPadding = contentPadding)
+    }
+}
+
+/**
+ * A LazyColumn of content folder from Room DB
+ */
+@Composable
+fun BodyContent(
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues
+){
     LazyColumn(
-        modifier = modifier.padding(vertical = 4.dp),
+        modifier = modifier.padding(contentPadding),
         userScrollEnabled = true
-    ){ // Needs to be Lazy
-        items(10){
+    ){
+        items(10){ // Use Room table to determine the size of the LazyColumn
             Spacer(modifier = modifier.height(12.dp)) // this helps avoid recomposition of the child composable function
-            LocationCard()
+            ContentFolder()
         }
     }
 }
 
+/**
+ * A content folder which includes a Date and LazyRow of ContentCard
+ */
 @Composable
-fun LocationCard(
+fun ContentFolder(
     modifier: Modifier = Modifier,
-    location: String = "Date"
+    location: String = "Date",
+    context: Context = LocalContext.current,
 ){
     Card(
         backgroundColor = MaterialTheme.colors.background,
-        border = BorderStroke(1.dp, if(isSystemInDarkTheme()) Color.White else Color.Black)
+        border = BorderStroke(1.dp, if(isSystemInDarkTheme()) Color.White else Color.Black),
+        modifier = modifier
+            .clickable(
+                onClick = {
+                    // navigate to detailed profile
+                    Toast.makeText(context, "Clicked Card", Toast.LENGTH_SHORT).show()
+                }
+            )
     ) {
         Column {
             Text(text = location, modifier = modifier.padding(4.dp), fontSize = 28.sp)
             LazyRow(
                 userScrollEnabled = true
             ) {
-                items(10) {
+                items(10) {// Size is determine by how many pictures the user added
                     ContentCard()
                 }
             }
@@ -88,6 +126,9 @@ fun LocationCard(
     }
 }
 
+/**
+ * A content card that includes an Image and Title
+ */
 @Composable
 fun ContentCard(
     modifier: Modifier = Modifier,
@@ -104,7 +145,9 @@ fun ContentCard(
         .clickable(
             enabled = true,
             onClick = { // use this to show larger image of clicked image
-                Toast.makeText(context, "Clicked Image", Toast.LENGTH_SHORT).show()
+                Toast
+                    .makeText(context, "Clicked Image", Toast.LENGTH_SHORT)
+                    .show()
                 isClicked.value = !isClicked.value
             },
         )
@@ -134,7 +177,8 @@ fun ContentCard(
 }
 
 /**
- * this can be in another file and use navigation
+ * This can be in another file and use navigation
+ * Used to enlarge the clicked image
  */
 @Composable
 fun BoxImage(
@@ -148,7 +192,7 @@ fun BoxImage(
         modifier = modifier
             .clip(RectangleShape)
             .background(color = MaterialTheme.colors.background)
-            .border(1.dp, if(isSystemInDarkTheme()) Color.White else Color.Black)
+            .border(1.dp, if (isSystemInDarkTheme()) Color.White else Color.Black)
             .size(height = configuration.screenHeightDp.dp, width = configuration.screenWidthDp.dp)
             .pointerInput(Unit) {
                 detectTransformGestures { centroid, pan, zoom, rotation ->
@@ -172,7 +216,7 @@ fun BoxImage(
         )
     }
 }
-
+/** ----------PREVIEWS---------- **/
 @Preview(showBackground = true)
 @Composable
 fun Home_Screen_Preview(){
