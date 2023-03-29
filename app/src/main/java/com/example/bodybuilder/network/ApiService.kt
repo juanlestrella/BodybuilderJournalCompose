@@ -25,15 +25,15 @@ interface ApiService {
     suspend fun getMetric(
         @Header("X-RapidAPI-Host") rapidHost: String,
         @Header("X-RapidAPI-Key") rapidKey: String,
-        @Query("weight") weight: Int,
-        @Query("height") height: Int
+        @Query("weight") weight: Float,
+        @Query("height") height: Float
     ) : BMIResult
     @GET("imperial")
     suspend fun getImperial(
         @Header("X-RapidAPI-Host") rapidHost: String,
         @Header("X-RapidAPI-Key") rapidKey: String,
-        @Query("weight") weight: Int,
-        @Query("height") height: Int
+        @Query("weight") weight: Float,
+        @Query("height") height: Float
     ) : BMIResult
 
     @GET("weight-category")

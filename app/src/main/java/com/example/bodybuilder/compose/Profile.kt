@@ -16,6 +16,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import com.example.bodybuilder.viewmodels.ProfileViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 /**
  * TODO: Connect this to its viewmodel then repository then retrofit
@@ -50,13 +52,16 @@ fun Profile_Screen(){
 @Composable
 fun ProfileBodyContent(
     modifier: Modifier = Modifier,
-    contentPaddingValues: PaddingValues
+    contentPaddingValues: PaddingValues,
+    profileViewModel: ProfileViewModel = viewModel()
 ){
     val focusManager = LocalFocusManager.current
     val context = LocalContext.current
+    // how to connect all three with viewmodel's state counterparts
+    // or do i even want to connect the weight and height? is it only the bmi i need to connect?
     var weight by rememberSaveable { mutableStateOf("") }
     var height by rememberSaveable { mutableStateOf("") }
-    var bmi by rememberSaveable { mutableStateOf("dds") }
+    var bmi by rememberSaveable { mutableStateOf("") }
 
     Column(
 
@@ -78,7 +83,7 @@ fun ProfileBodyContent(
                     }else if (height.isNullOrEmpty()){
                         focusManager.moveFocus(FocusDirection.Down)
                     }else{
-                        Toast.makeText(context, weight, Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(context, weight, Toast.LENGTH_SHORT).show()
                     }
                 }
             )
@@ -100,13 +105,14 @@ fun ProfileBodyContent(
                     }else if (weight.isNullOrEmpty()){
                         focusManager.moveFocus(FocusDirection.Up)
                     }else{
-                        Toast.makeText(context, height, Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(context, height, Toast.LENGTH_SHORT).show()
+                        profileViewModel.getBMI()
                     }
                 }
             )
         )
         TextField(
-            value = bmi,
+            value = bmi, // change the value to repository's bmiState
             onValueChange = {},
             label = {Text("BMI")},
             readOnly = true
