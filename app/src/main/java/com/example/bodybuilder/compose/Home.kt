@@ -50,7 +50,7 @@ import java.nio.channels.FileChannel.MapMode
  */
 
 @Composable
-fun Home_Screen() {
+fun HomeScreen() {
     // can be used to show Snackbar, open/close drawer
     val scaffoldState = rememberScaffoldState()
     Scaffold(
@@ -70,7 +70,7 @@ fun Home_Screen() {
             }
         }
     ){ contentPadding ->
-        BodyContent(contentPadding = contentPadding)
+        BodyContent(contentPaddingValues = contentPadding)
     }
 }
 
@@ -80,15 +80,15 @@ fun Home_Screen() {
 @Composable
 fun BodyContent(
     modifier: Modifier = Modifier,
-    contentPadding: PaddingValues
+    contentPaddingValues: PaddingValues
 ){
     LazyColumn(
-        modifier = modifier.padding(contentPadding),
+        modifier = modifier.padding(contentPaddingValues),
         userScrollEnabled = true
     ){
         items(10){ // Use Room table to determine the size of the LazyColumn
             Spacer(modifier = modifier.height(12.dp)) // this helps avoid recomposition of the child composable function
-            ContentFolder()
+            HomeContentFolder()
         }
     }
 }
@@ -97,7 +97,7 @@ fun BodyContent(
  * A content folder which includes a Date and LazyRow of ContentCard
  */
 @Composable
-fun ContentFolder(
+fun HomeContentFolder(
     modifier: Modifier = Modifier,
     location: String = "Date",
     context: Context = LocalContext.current,
@@ -221,6 +221,6 @@ fun BoxImage(
 @Composable
 fun Home_Screen_Preview(){
     Bodybuilder {
-        Home_Screen()
+        HomeScreen()
     }
 }
