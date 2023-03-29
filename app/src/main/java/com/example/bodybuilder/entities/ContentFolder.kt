@@ -5,7 +5,7 @@ import androidx.room.Entity
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-@Entity(tableName = "content folder")
+@Entity(tableName = "contentFolder")
 data class ContentFolderData (
         val contentCardData: ContentCardData,
 ) :Parcelable

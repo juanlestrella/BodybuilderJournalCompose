@@ -5,8 +5,8 @@ import androidx.room.Entity
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-@Entity(tableName = "content card")
+@Entity(tableName = "contentCard")
 data class ContentCardData(
     val image: Int,
-    val bodypart: String
+    val bodyPart: String
 ) :Parcelable
