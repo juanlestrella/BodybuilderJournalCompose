@@ -1,7 +1,7 @@
 package com.example.bodybuilder.network
 
 import com.example.bodybuilder.Constants
-import com.example.bodybuilder.entities.BMIResult
+import com.example.bodybuilder.entities.BmiData
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
@@ -27,14 +27,14 @@ interface ApiService {
         @Header("X-RapidAPI-Key") rapidKey: String,
         @Query("weight") weight: Float,
         @Query("height") height: Float
-    ) : BMIResult
+    ) : BmiData
     @GET("imperial")
     suspend fun getImperial(
         @Header("X-RapidAPI-Host") rapidHost: String,
         @Header("X-RapidAPI-Key") rapidKey: String,
         @Query("weight") weight: Float,
         @Query("height") height: Float
-    ) : BMIResult
+    ) : BmiData
 
     @GET("weight-category")
     suspend fun getCategory(
