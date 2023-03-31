@@ -1,6 +1,5 @@
 package com.example.bodybuilder.database
 
-import android.app.Application
 import android.content.Context
 import androidx.room.*
 import com.example.bodybuilder.entities.BmiData
@@ -27,7 +26,7 @@ fun getBmiDB(context: Context) : BmiDB {
     synchronized(BmiDB::class.java){
         if(!::INSTANCE.isInitialized){
             INSTANCE = Room.databaseBuilder(
-                context,
+                context.applicationContext,
                 BmiDB::class.java,
                 "bmi_db"
             ).build()

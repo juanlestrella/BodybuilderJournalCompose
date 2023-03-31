@@ -1,5 +1,7 @@
 package com.example.bodybuilder.compose
 
+import android.app.Activity
+import android.app.Application
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -18,6 +20,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import com.example.bodybuilder.viewmodels.ProfileViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.bodybuilder.viewmodels.ProfileViewModelFactory
 
 /**
  * TODO: Connect this to its viewmodel then repository then retrofit
@@ -53,10 +56,12 @@ fun Profile_Screen(){
 fun ProfileBodyContent(
     modifier: Modifier = Modifier,
     contentPaddingValues: PaddingValues,
-    profileViewModel: ProfileViewModel = viewModel()
 ){
     val focusManager = LocalFocusManager.current
-    val context = LocalContext.current
+    val context = LocalContext.current as Activity
+    val viewModel: ProfileViewModel by viewModel(
+        factory = ProfileViewModelFactory(context.applicationContext as Application)
+    )
     // how to connect all three with viewmodel's state counterparts
     // or do i even want to connect the weight and height? is it only the bmi i need to connect?
     var weight by rememberSaveable { mutableStateOf("") }
@@ -84,8 +89,8 @@ fun ProfileBodyContent(
                         focusManager.moveFocus(FocusDirection.Down)
                     }else{
                         //Toast.makeText(context, weight, Toast.LENGTH_SHORT).show()
-                        profileViewModel.getBMI()
-                        bmi = profileViewModel.bmiState.value.toString()
+//                        viewModel.getBMI(weight.toFloat(), height.toFloat())
+//                        bmi = viewModel.bmiState.value.toString()
                     }
                 }
             )
@@ -108,8 +113,8 @@ fun ProfileBodyContent(
                         focusManager.moveFocus(FocusDirection.Up)
                     }else{
                         //Toast.makeText(context, height, Toast.LENGTH_SHORT).show()
-                        profileViewModel.getBMI()
-                        bmi = profileViewModel.bmiState.value.toString()
+//                        viewModel.getBMI(weight.toFloat(), height.toFloat())
+//                        bmi = viewModel.bmiState.value.toString()
                     }
                 }
             )
