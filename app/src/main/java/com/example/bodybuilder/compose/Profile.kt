@@ -1,11 +1,9 @@
 package com.example.bodybuilder.compose
 
 import android.app.Activity
-import android.app.Application
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -18,9 +16,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import com.example.bodybuilder.viewmodels.ProfileViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.bodybuilder.viewmodels.ProfileViewModelFactory
+import com.example.bodybuilder.viewmodels.ProfileViewModel
 
 /**
  * TODO: Connect this to its viewmodel then repository then retrofit
@@ -55,15 +53,13 @@ fun Profile_Screen(){
 @Composable
 fun ProfileBodyContent(
     modifier: Modifier = Modifier,
-    contentPaddingValues: PaddingValues,
+    contentPaddingValues: PaddingValues
 ){
     val focusManager = LocalFocusManager.current
     val context = LocalContext.current as Activity
-    val viewModel: ProfileViewModel by viewModel(
-        factory = ProfileViewModelFactory(context.applicationContext as Application)
-    )
-    // how to connect all three with viewmodel's state counterparts
-    // or do i even want to connect the weight and height? is it only the bmi i need to connect?
+
+    val viewModel: ProfileViewModel = hiltViewModel<ProfileViewModel>()
+
     var weight by rememberSaveable { mutableStateOf("") }
     var height by rememberSaveable { mutableStateOf("") }
     var bmi by rememberSaveable { mutableStateOf("") }
@@ -88,9 +84,9 @@ fun ProfileBodyContent(
                     }else if (height.isNullOrEmpty()){
                         focusManager.moveFocus(FocusDirection.Down)
                     }else{
-                        //Toast.makeText(context, weight, Toast.LENGTH_SHORT).show()
-//                        viewModel.getBMI(weight.toFloat(), height.toFloat())
-//                        bmi = viewModel.bmiState.value.toString()
+                        Toast.makeText(context, weight, Toast.LENGTH_SHORT).show()
+                        //viewModel.getBMI(weight.toFloat(), height.toFloat())
+                        //bmi = viewModel.bmiState.value.toString()
                     }
                 }
             )
@@ -112,9 +108,9 @@ fun ProfileBodyContent(
                     }else if (weight.isNullOrEmpty()){
                         focusManager.moveFocus(FocusDirection.Up)
                     }else{
-                        //Toast.makeText(context, height, Toast.LENGTH_SHORT).show()
-//                        viewModel.getBMI(weight.toFloat(), height.toFloat())
-//                        bmi = viewModel.bmiState.value.toString()
+                        Toast.makeText(context, height, Toast.LENGTH_SHORT).show()
+                        //viewModel.getBMI(weight.toFloat(), height.toFloat())
+                        //bmi = viewModel.bmiState.value.toString()
                     }
                 }
             )

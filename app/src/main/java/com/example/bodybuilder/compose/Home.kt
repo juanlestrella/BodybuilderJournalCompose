@@ -195,7 +195,7 @@ fun BoxImage(
             .border(1.dp, if (isSystemInDarkTheme()) Color.White else Color.Black)
             .size(height = configuration.screenHeightDp.dp, width = configuration.screenWidthDp.dp)
             .pointerInput(Unit) {
-                detectTransformGestures { centroid, pan, zoom, rotation ->
+                detectTransformGestures { _, _, zoom, rotation ->
                     scale.value *= zoom
                     rotationState.value += rotation
                 }
