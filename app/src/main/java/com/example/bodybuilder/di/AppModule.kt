@@ -58,6 +58,7 @@ object AppModule {
     }
 
     @Provides
+    @Singleton
     fun provideBmiDao(bmiDB: BmiDB) : BmiDao {
         return bmiDB.bmiDao
     }
