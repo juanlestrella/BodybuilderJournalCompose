@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody.Companion.toResponseBody
+import retrofit2.Response
 import javax.inject.Inject
 
 class Repository @Inject constructor(
@@ -22,15 +23,17 @@ class Repository @Inject constructor(
     val bmiState: StateFlow<BmiData> = _bmiState.asStateFlow()
 
     // might want a third parameter for either Metric or Imperial
-    suspend fun getBMI(weight: String, height: String){
+    suspend fun getBMI(weight: Float, height: Float){
         withContext(Dispatchers.IO){
             // Network
-            try {
-                val bmiResult: BmiData = api.getImperial(Constants.KEY, Constants.HOST, weight, height)
-                Log.i("API", bmiResult.toString())
-            }catch (e : Exception){
-                Log.e("REPOSITY ERROR", e.message!!)
+            val result : Response<BmiData> = api.getBmi(Constants.KEY, Constants.HOST, 27, weight, height)
+            if (result.isSuccessful){
+                Log.i("REPO", result.code().toString())
+            }else {
+                result.errorBody()?.string()?.let { Log.e("REPO ERR", it.toString()) }
             }
+//                val bmiResult: BmiData = api.getImperial(Constants.KEY, Constants.HOST, weight, height)
+//                Log.i("API", bmiResult.toString())
 
             // Database
             //bmiDao.insertBmi(bmiResult)

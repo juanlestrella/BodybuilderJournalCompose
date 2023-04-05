@@ -15,6 +15,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -31,17 +32,25 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideMoshiBuilder() : Moshi {
-        return Moshi.Builder()
+    fun provideMoshiBuilder() : Moshi =
+        Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .build()
-    }
+
 
     @Singleton
     @Provides
-    fun provideApi(moshi: Moshi) : ApiService {
+    fun provideOkHttp() : OkHttpClient =
+        OkHttpClient
+            .Builder()
+            .build()
+
+    @Singleton
+    @Provides
+    fun provideApi(moshi: Moshi, okHttpClient: OkHttpClient) : ApiService {
         return Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .client(okHttpClient)
             .baseUrl(Constants.BASE_URL)
             .build()
             .create(ApiService::class.java)
@@ -49,19 +58,17 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideBmiDB(@ApplicationContext appContext: Context) : BmiDB {
-        return Room.databaseBuilder(
+    fun provideBmiDB(@ApplicationContext appContext: Context) =
+        Room.databaseBuilder(
             appContext,
             BmiDB::class.java,
             "bmi_db"
         ).build()
-    }
 
-    @Provides
+
     @Singleton
-    fun provideBmiDao(bmiDB: BmiDB) : BmiDao {
-        return bmiDB.bmiDao
-    }
+    @Provides
+    fun provideBmiDao(bmiDB: BmiDB) = bmiDB.bmiDao
 
     @Singleton
     @Provides

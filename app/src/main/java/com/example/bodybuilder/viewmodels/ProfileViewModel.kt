@@ -24,7 +24,7 @@ class ProfileViewModel @Inject constructor(
     fun getBMI(weight: String, height: String){
         viewModelScope.launch {
             try {
-                repository.getBMI(weight, height)
+                repository.getBMI(weight.toFloat(), height.toFloat())
                 _bmiState.value = repository.bmiState.value
             } catch (e: Exception){
                 e.message?.let { Log.e("PROFILE VIEW MODEL", it.toString()) }
