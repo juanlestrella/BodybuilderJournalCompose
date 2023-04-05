@@ -4,6 +4,7 @@ import android.app.Activity
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -55,7 +56,7 @@ fun ProfileBodyContent(
     modifier: Modifier = Modifier,
     contentPaddingValues: PaddingValues
 ){
-    //val focusManager = LocalFocusManager.current
+    // val focusManager = LocalFocusManager.current
     val context = LocalContext.current as Activity
 
     val viewModel: ProfileViewModel = hiltViewModel<ProfileViewModel>()
@@ -66,7 +67,7 @@ fun ProfileBodyContent(
     var bmi by rememberSaveable { mutableStateOf("") }
 
     Column(
-
+        modifier = modifier.padding(contentPaddingValues)
     ){
         TextField(
             value = age,
