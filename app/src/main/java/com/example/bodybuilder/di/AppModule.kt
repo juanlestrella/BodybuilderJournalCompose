@@ -1,10 +1,11 @@
 package com.example.bodybuilder.di
 
 import android.content.Context
+import androidx.room.Room
 import com.example.bodybuilder.BaseApplication
 import com.example.bodybuilder.Constants
 import com.example.bodybuilder.database.BmiDB
-import com.example.bodybuilder.database.getBmiDB
+import com.example.bodybuilder.database.BmiDao
 import com.example.bodybuilder.network.ApiService
 import com.example.bodybuilder.repository.Repository
 import com.squareup.moshi.Moshi
@@ -46,16 +47,25 @@ object AppModule {
             .create(ApiService::class.java)
     }
 
-//    @Singleton
-//    @Provides
-//    fun provideBmiDB(context: Context) : BmiDB {
-//        return getBmiDB(context)
-//    }
+    @Singleton
+    @Provides
+    fun provideBmiDB(@ApplicationContext appContext: Context) : BmiDB {
+        return Room.databaseBuilder(
+            appContext,
+            BmiDB::class.java,
+            "bmi_db"
+        ).build()
+    }
+
+    @Provides
+    fun provideBmiDao(bmiDB: BmiDB) : BmiDao {
+        return bmiDB.bmiDao
+    }
 
     @Singleton
     @Provides
-    fun provideRepository(api : ApiService, ) : Repository {
-        return Repository(api, ) // bmiDB bmiDB: BmiDB
+    fun provideRepository(api : ApiService, bmiDao: BmiDao) : Repository {
+        return Repository(api, bmiDao) // bmiDB bmiDB: BmiDB
     }
 
 }

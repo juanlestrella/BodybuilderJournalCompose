@@ -85,8 +85,8 @@ fun ProfileBodyContent(
                         focusManager.moveFocus(FocusDirection.Down)
                     }else{
                         Toast.makeText(context, weight, Toast.LENGTH_SHORT).show()
-                        //viewModel.getBMI(weight.toFloat(), height.toFloat())
-                        //bmi = viewModel.bmiState.value.toString()
+                        viewModel.getBMI(weight.toFloat(), height.toFloat())
+                        bmi = viewModel.bmiState.value.toString()
                     }
                 }
             )
@@ -109,8 +109,8 @@ fun ProfileBodyContent(
                         focusManager.moveFocus(FocusDirection.Up)
                     }else{
                         Toast.makeText(context, height, Toast.LENGTH_SHORT).show()
-                        //viewModel.getBMI(weight.toFloat(), height.toFloat())
-                        //bmi = viewModel.bmiState.value.toString()
+                        viewModel.getBMI(weight.toFloat(), height.toFloat())
+                        bmi = viewModel.bmiState.value.toString()
                     }
                 }
             )

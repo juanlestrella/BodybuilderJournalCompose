@@ -18,19 +18,3 @@ interface BmiDao {
 abstract class BmiDB : RoomDatabase(){
     abstract val bmiDao: BmiDao
 }
-
-
-private lateinit var INSTANCE: BmiDB
-
-fun getBmiDB(context: Context) : BmiDB {
-    synchronized(BmiDB::class.java){
-        if(!::INSTANCE.isInitialized){
-            INSTANCE = Room.databaseBuilder(
-                context.applicationContext,
-                BmiDB::class.java,
-                "bmi_db"
-            ).build()
-        }
-        return INSTANCE
-    }
-}
