@@ -86,7 +86,7 @@ fun ProfileBodyContent(
                     }else{
                         Toast.makeText(context, weight, Toast.LENGTH_SHORT).show()
                         viewModel.getBMI(weight, height)
-                        bmi = viewModel.bmiState.value.bmi
+                        bmi = viewModel.bmiState.value.bmi.toString()
                     }
                 }
             )
@@ -110,7 +110,7 @@ fun ProfileBodyContent(
                     }else{
                         Toast.makeText(context, height, Toast.LENGTH_SHORT).show()
                         viewModel.getBMI(weight, height)
-                        bmi = viewModel.bmiState.value.bmi
+                        bmi = viewModel.bmiState.value.bmi.toString()
                     }
                 }
             )

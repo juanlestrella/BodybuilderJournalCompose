@@ -8,8 +8,7 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "BmiData")
 data class BmiData(
     @PrimaryKey(autoGenerate = true) var id: Int = 0,
-    val bmi: String = "",
-    val weight: Float = 0.toFloat(),
-    val height: Float = 0.toFloat(),
-    val weightCategory: String = ""
+    val bmi: Float = 0.toFloat(),
+    val health: String = "",
+    val healthy_bmi_range: String = ""
 )
