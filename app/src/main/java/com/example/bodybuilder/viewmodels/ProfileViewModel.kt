@@ -21,10 +21,10 @@ class ProfileViewModel @Inject constructor(
     private val _bmiState = MutableStateFlow<BmiData>(BmiData())
     val bmiState: StateFlow<BmiData> = _bmiState.asStateFlow()
 
-    fun getBMI(weight: String, height: String){
+    fun getBMI(age: String, weight: String, height: String){
         viewModelScope.launch {
             try {
-                repository.getBMI(weight.toFloat(), height.toFloat())
+                repository.getBMI(age.toInt(), weight.toFloat(), height.toFloat())
                 _bmiState.value = repository.bmiState.value
             } catch (e: Exception){
                 e.message?.let { Log.e("PROFILE VIEW MODEL", it.toString()) }

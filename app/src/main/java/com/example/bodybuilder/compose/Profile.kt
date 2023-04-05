@@ -55,11 +55,12 @@ fun ProfileBodyContent(
     modifier: Modifier = Modifier,
     contentPaddingValues: PaddingValues
 ){
-    val focusManager = LocalFocusManager.current
+    //val focusManager = LocalFocusManager.current
     val context = LocalContext.current as Activity
 
     val viewModel: ProfileViewModel = hiltViewModel<ProfileViewModel>()
 
+    var age by rememberSaveable{ mutableStateOf("") }
     var weight by rememberSaveable { mutableStateOf("") }
     var height by rememberSaveable { mutableStateOf("") }
     var bmi by rememberSaveable { mutableStateOf("") }
@@ -68,28 +69,26 @@ fun ProfileBodyContent(
 
     ){
         TextField(
+            value = age,
+            onValueChange = {
+                if (it.length <= 6){
+                    age = it
+                }
+            },
+            label = {Text("Age")},
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Next)
+        )
+        TextField(
             value = weight,
             onValueChange = {
                 if (it.length <= 6){
                     weight = it
                 }
             },
-            label = {Text("Weight")},
+            label = {Text("Weight(kg)")},
             singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Next),
-            keyboardActions = KeyboardActions(
-                onNext = {
-                    if(weight.isNullOrEmpty()){
-                        Toast.makeText(context, "Please enter weight", Toast.LENGTH_SHORT).show()
-                    }else if (height.isNullOrEmpty()){
-                        focusManager.moveFocus(FocusDirection.Down)
-                    }else{
-                        Toast.makeText(context, weight, Toast.LENGTH_SHORT).show()
-                        viewModel.getBMI(weight, height)
-                        bmi = viewModel.bmiState.value.bmi.toString()
-                    }
-                }
-            )
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Next)
         )
         TextField(
             value = height,
@@ -98,22 +97,9 @@ fun ProfileBodyContent(
                     height = it
                 }
             },
-            label = {Text("Height (Inch)")},
+            label = {Text("Height(cm)")},
             singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            keyboardActions = KeyboardActions(
-                onDone = {
-                    if(height.isNullOrEmpty()){
-                        Toast.makeText(context, "Please enter height", Toast.LENGTH_SHORT).show()
-                    }else if (weight.isNullOrEmpty()){
-                        focusManager.moveFocus(FocusDirection.Up)
-                    }else{
-                        Toast.makeText(context, height, Toast.LENGTH_SHORT).show()
-                        viewModel.getBMI(weight, height)
-                        bmi = viewModel.bmiState.value.bmi.toString()
-                    }
-                }
-            )
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
         TextField(
             value = bmi, // change the value to repository's bmiState
@@ -121,6 +107,22 @@ fun ProfileBodyContent(
             label = {Text("BMI")},
             readOnly = true
         )
+        Button(
+            onClick = {
+                if (age.isNullOrEmpty() || age.toInt() < 0 || age.toInt() > 80){
+                    Toast.makeText(context, "Please enter age between 0 to 80", Toast.LENGTH_SHORT).show()
+                } else if (weight.isNullOrEmpty() || weight.toInt() < 40 || weight.toInt() > 160){
+                    Toast.makeText(context, "Please enter weight between 40 kg and 160 kg", Toast.LENGTH_SHORT).show()
+                } else if (height.isNullOrEmpty() || height.toInt() < 130 || height.toInt() > 230){
+                    Toast.makeText(context, "Please enter height between 130 cm and 230 cm", Toast.LENGTH_SHORT).show()
+                } else{
+                    viewModel.getBMI(age, weight, height)
+                    bmi = viewModel.bmiState.value.bmi.toString()
+                }
+            }
+        ){
+            Text(text = "Submit")
+        }
     }
 
 

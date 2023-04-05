@@ -73,7 +73,7 @@ object AppModule {
     @Singleton
     @Provides
     fun provideRepository(api : ApiService, bmiDao: BmiDao) : Repository {
-        return Repository(api, bmiDao) // bmiDB bmiDB: BmiDB
+        return Repository(api, bmiDao)
     }
 
 }

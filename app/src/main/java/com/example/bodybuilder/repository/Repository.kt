@@ -23,10 +23,10 @@ class Repository @Inject constructor(
     val bmiState: StateFlow<BmiData> = _bmiState.asStateFlow()
 
     // need third param for age
-    suspend fun getBMI(weight: Float, height: Float){
+    suspend fun getBMI(age: Int, weight: Float, height: Float){
         withContext(Dispatchers.IO){
             // Network
-            val result : Response<BmiData> = api.getBmi(Constants.KEY, Constants.HOST, 27, weight, height)
+            val result : Response<BmiData> = api.getBmi(Constants.KEY, Constants.HOST, age, weight, height)
             if (result.isSuccessful){
                 Log.i("REPO", result.code().toString())
                 // Room Database
