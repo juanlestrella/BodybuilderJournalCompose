@@ -18,12 +18,8 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.bodybuilder.viewmodels.ProfileViewModel
 
-/**
- * TODO: Connect this to its viewmodel then repository then retrofit
- */
 @Composable
 fun Profile_Screen(){
     val scaffoldState = rememberScaffoldState()
@@ -118,7 +114,7 @@ fun ProfileBodyContent(
                     Toast.makeText(context, "Please enter height between 130 cm and 230 cm", Toast.LENGTH_SHORT).show()
                 } else{
                     viewModel.getBMI(age, weight, height)
-                    bmi = viewModel.bmiState.value.bmi.toString()
+                    //bmi = viewModel.bmiState.value.bmi.toString()
                 }
             }
         ){

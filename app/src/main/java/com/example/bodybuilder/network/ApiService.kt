@@ -1,6 +1,8 @@
 package com.example.bodybuilder.network
 
+import com.example.bodybuilder.database.BmiDB
 import com.example.bodybuilder.entities.BmiData
+import com.example.bodybuilder.entities.BmiResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -14,5 +16,5 @@ interface ApiService {
         @Query("age") age: Number,
         @Query("weight") weight: Number,
         @Query("height") height: Number
-    ) : Response<BmiData>
+    ) : Response<BmiResponse>
 }

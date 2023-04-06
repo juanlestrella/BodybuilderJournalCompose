@@ -5,6 +5,7 @@ import com.example.bodybuilder.Constants
 import com.example.bodybuilder.database.BmiDB
 import com.example.bodybuilder.database.BmiDao
 import com.example.bodybuilder.entities.BmiData
+import com.example.bodybuilder.entities.BmiResponse
 import com.example.bodybuilder.network.ApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,21 +20,20 @@ class Repository @Inject constructor(
     private val api: ApiService,
     private val bmiDao: BmiDao,
 ) {
-    private val _bmiState = MutableStateFlow<BmiData>(BmiData())
-    val bmiState: StateFlow<BmiData> = _bmiState.asStateFlow()
-
-    // need third param for age
+//    private val _bmiState = MutableStateFlow<BmiData>(BmiData())
+//    val bmiState: StateFlow<BmiData> = _bmiState.asStateFlow()
     suspend fun getBMI(age: Int, weight: Float, height: Float){
         withContext(Dispatchers.IO){
             // Network
-            val result : Response<BmiData> = api.getBmi(Constants.KEY, Constants.HOST, age, weight, height)
-            if (result.isSuccessful){
-                Log.i("REPO", result.code().toString())
+            val response : Response<BmiResponse> = api.getBmi(Constants.KEY, Constants.HOST, age, weight, height)
+            if (response.isSuccessful){
+                // need to find a way to get the proper response
                 // Room Database
-                bmiDao.insertBmi(result.body()!!)
-                _bmiState.value = bmiDao.getBmi()
+                bmiDao.insertBmi(response.body()!!.data)
+                Log.i("REPO", bmiDao.getBmi().toString())
+                //_bmiState.value = bmiDao.getBmi()
             }else {
-                result.errorBody()?.string()?.let { Log.e("REPOSITORY ERR", it.toString()) }
+                response.errorBody()?.string()?.let { Log.e("REPOSITORY ERR", it.toString()) }
             }
         }
     }
