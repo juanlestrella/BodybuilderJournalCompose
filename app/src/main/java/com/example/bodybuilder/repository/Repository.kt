@@ -22,7 +22,7 @@ class Repository @Inject constructor(
             val response : Response<BmiResponse> = api.getResponseBmi(Constants.KEY, Constants.HOST, age, weight, height)
             if (response.isSuccessful){
                 // Insert to BMI Room Database
-                bmiDao.insertBmi(response.body()!!.data)
+                response.body()?.let { bmiDao.insertBmi(it.data) }
                 //Log.i("REPO", bmiState.toString())
             }else {
                 response.errorBody()?.string()?.let { Log.e(tag, it.toString()) }
