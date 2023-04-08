@@ -23,20 +23,27 @@ class ProfileViewModel @Inject constructor(
     private val _bmiState = MutableStateFlow<BmiData>(BmiData(0.toFloat(), "",""))
     val bmiState: StateFlow<BmiData> = _bmiState.asStateFlow()
 
-    fun insertBmi(age: String, weight: String, height: String){
+    /**
+     * Send the api User's input then insert the response in _bmiState.value
+     */
+    fun getBmiFromApi(age: String, weight: String, height: String){
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                repository.insertBmi(age.toInt(), weight.toFloat(), height.toFloat())
+                repository.getBmiFromApi(age.toInt(), weight.toFloat(), height.toFloat())
+                _bmiState.value = repository.bmi.value
             } catch (e: Exception){
                 e.message?.let { Log.e(tag, it) }
             }
         }
     }
 
-    fun getBmi(){
+    /**
+     * TODO: Get the history of all inserted bmi
+     */
+    fun getAllBmiFromDatabase(){
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                _bmiState.value = repository.getBmi()
+                _bmiState.value = repository.getBmiFromDatabase()
                 //Log.i(tag, bmiState.toString())
             } catch (e : Exception) {
                 e.message?.let { Log.e(tag, it) }
