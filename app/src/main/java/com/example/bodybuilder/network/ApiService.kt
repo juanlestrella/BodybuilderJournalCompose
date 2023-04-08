@@ -10,7 +10,7 @@ import retrofit2.http.Query
 
 interface ApiService {
     @GET("bmi")
-    suspend fun getBmi(
+    suspend fun getResponseBmi(
         @Header("X-RapidAPI-Key") rapidKey: String,
         @Header("X-RapidAPI-Host") rapidHost: String,
         @Query("age") age: Number,

@@ -113,8 +113,8 @@ fun ProfileBodyContent(
                 } else if (height.isNullOrEmpty() || height.toInt() < 130 || height.toInt() > 230){
                     Toast.makeText(context, "Please enter height between 130 cm and 230 cm", Toast.LENGTH_SHORT).show()
                 } else{
-                    viewModel.getBMI(age, weight, height)
-                    //bmi = viewModel.bmiState.value.bmi.toString()
+                    viewModel.insertBmi(age, weight, height)
+                    bmi = viewModel.getBmi()?.let { it.bmi }.toString()
                 }
             }
         ){
