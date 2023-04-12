@@ -1,6 +1,7 @@
 package com.example.bodybuilder.repository
 
 import android.util.Log
+import com.example.bodybuilder.BuildConfig
 import com.example.bodybuilder.Constants
 import com.example.bodybuilder.database.BmiDao
 import com.example.bodybuilder.entities.BmiData
