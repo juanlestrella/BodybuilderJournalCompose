@@ -6,7 +6,7 @@ buildscript {
         moshi_version = '1.14.0'
         okhttp3_version = '4.10.0'
         room_version = '2.5.1'
-        viewmodel_version = '2.5.1'
+        lifecycle_version = '2.6.0-alpha01'
         hilt_version = '2.44'
         hilt_navigation_version = '1.0.0'
     }

@@ -94,7 +94,9 @@ dependencies {
     implementation "androidx.room:room-ktx:$room_version"
 
     // ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$viewmodel_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-compose:$lifecycle_version"
 
     // Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"

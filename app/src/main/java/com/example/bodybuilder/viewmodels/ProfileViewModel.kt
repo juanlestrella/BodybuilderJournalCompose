@@ -20,7 +20,7 @@ class ProfileViewModel @Inject constructor(
 {
     private val tag = ProfileViewModel::class.simpleName
 
-    private val _bmiState = MutableStateFlow<BmiData>(BmiData(0.toFloat(), "",""))
+    private val _bmiState = MutableStateFlow(BmiData(0.toFloat(), "",""))
     val bmiState: StateFlow<BmiData> = _bmiState.asStateFlow()
 
     /**
