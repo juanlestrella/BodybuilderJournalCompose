@@ -17,4 +17,11 @@ interface ApiService {
         @Query("weight") weight: Number,
         @Query("height") height: Number
     ) : Response<BmiResponse>
+    /**
+     * TODO: Api calls
+     * 1) BMI (Ongoing) - need to store to Room
+     * 2) Body Fat Percentage
+     * 3) Daily Calorie Required
+     * 4) Macros
+     */
 }

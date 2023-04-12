@@ -5,3 +5,6 @@ object Constants {
     const val KEY = "97c6049ebamsh592433ea247b11fp1b700ejsn25497795bf4c"
     const val HOST = "fitness-calculator.p.rapidapi.com"
 }
+/**
+ * TODO: hide api key
+ */
