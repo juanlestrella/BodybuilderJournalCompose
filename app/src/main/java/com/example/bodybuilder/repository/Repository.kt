@@ -1,11 +1,10 @@
 package com.example.bodybuilder.repository
 
 import android.util.Log
-import com.example.bodybuilder.BuildConfig
 import com.example.bodybuilder.Constants
 import com.example.bodybuilder.database.BmiDao
-import com.example.bodybuilder.entities.BmiData
-import com.example.bodybuilder.entities.BmiResponse
+import com.example.bodybuilder.entities.BmiData.BmiData
+import com.example.bodybuilder.response.BmiResponse
 import com.example.bodybuilder.network.ApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,7 +31,7 @@ class Repository @Inject constructor(
                 _bmi.value = response.body()!!.data
                 //Log.i("REPO", bmiState.toString())
             }else {
-                response.errorBody()?.string()?.let { Log.e(tag, it.toString()) }
+                response.errorBody()?.string()?.let { Log.e(tag, it + "hello") }
             }
         }
     }

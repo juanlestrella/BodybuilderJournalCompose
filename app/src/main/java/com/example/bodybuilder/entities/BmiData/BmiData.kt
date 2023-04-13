@@ -1,4 +1,4 @@
-package com.example.bodybuilder.entities
+package com.example.bodybuilder.entities.BmiData
 
 import android.os.Parcelable
 import androidx.room.Entity

@@ -1,6 +1,7 @@
 package com.example.bodybuilder.network
 
-import com.example.bodybuilder.entities.BmiResponse
+import com.example.bodybuilder.response.BmiResponse
+import com.example.bodybuilder.response.BodyFatResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -28,7 +29,7 @@ interface ApiService {
         @Query("neck") neck: Number,
         @Query("waist") waist: Number,
         @Query("hip") hip: Number
-    ) : Response<Unit>
+    ) : Response<BodyFatResponse>
 
     @GET("dailycalorie")
     suspend fun getResponseDailyCalorie(
