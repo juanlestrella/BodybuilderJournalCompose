@@ -76,16 +76,16 @@ fun BmiBodyContent(
         )
         Button(
             onClick = {
-//                if (age.isEmpty() || age.toInt() < 0 || age.toInt() > 80){
-//                    Toast.makeText(context, "Please enter age between 0 to 80", Toast.LENGTH_SHORT).show()
-//                } else if (weight.isEmpty() || weight.toInt() < 40 || weight.toInt() > 160){
-//                    Toast.makeText(context, "Please enter weight between 40 kg and 160 kg", Toast.LENGTH_SHORT).show()
-//                } else if (height.isEmpty() || height.toInt() < 130 || height.toInt() > 230){
-//                    Toast.makeText(context, "Please enter height between 130 cm and 230 cm", Toast.LENGTH_SHORT).show()
-//                } else{
+                if (age.isEmpty() || age.toInt() < 0 || age.toInt() > 80){
+                    Toast.makeText(context, "Please enter age between 0 to 80", Toast.LENGTH_SHORT).show()
+                } else if (weight.isEmpty() || weight.toInt() < 40 || weight.toInt() > 160){
+                    Toast.makeText(context, "Please enter weight between 40 kg and 160 kg", Toast.LENGTH_SHORT).show()
+                } else if (height.isEmpty() || height.toInt() < 130 || height.toInt() > 230){
+                    Toast.makeText(context, "Please enter height between 130 cm and 230 cm", Toast.LENGTH_SHORT).show()
+                } else{
                     viewModel.getBmiFromApi(age, weight, height)
                     //bmi = viewModel.bmiState.value.bmi.toString()
-//                }
+                }
             }
         ){
             Text(text = "Submit")

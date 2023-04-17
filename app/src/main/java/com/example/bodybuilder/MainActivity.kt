@@ -25,8 +25,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     //HomeScreen()
-                    Bmi_Screen()
-                    //BodyFat_Screen()
+                    //Bmi_Screen()
+                    BodyFat_Screen()
                 }
             }
         }
