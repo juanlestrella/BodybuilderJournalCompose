@@ -14,13 +14,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.bodybuilder.ui.theme.Bodybuilder
 import com.example.bodybuilder.viewmodels.ProfileViewModel
 
 @Composable
-fun Profile_Screen(){
+fun Bmi_Screen(){
     val scaffoldState = rememberScaffoldState()
     Scaffold(
         scaffoldState = scaffoldState,
@@ -34,21 +36,18 @@ fun Profile_Screen(){
             /**
              * TODO: Change this to BottomNavigation later after creating all the screens
              */
-            /**
-             * TODO: Change this to BottomNavigation later after creating all the screens
-             */
             BottomAppBar(backgroundColor = MaterialTheme.colors.background) {
                 Text(text = "Bottom App Bar", color = Color.Red)
             }
         }
     ){ contentPadding ->
-        ProfileBodyContent(contentPaddingValues = contentPadding)
+        BmiBodyContent(contentPaddingValues = contentPadding)
     }
 }
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
-fun ProfileBodyContent(
+fun BmiBodyContent(
     modifier: Modifier = Modifier,
     contentPaddingValues: PaddingValues
 ){
@@ -60,67 +59,44 @@ fun ProfileBodyContent(
     var age by rememberSaveable{ mutableStateOf("") }
     var weight by rememberSaveable { mutableStateOf("") }
     var height by rememberSaveable { mutableStateOf("") }
+
     val bmi by viewModel.bmiState.collectAsStateWithLifecycle()
 
     Column(
         modifier = modifier.padding(contentPaddingValues)
     ){
+        TextFieldAge(age = age, onTextChange = {age = it}, imeAction = ImeAction.Next)
+        TextFieldWeight(weight = weight, onTextChange = {weight = it}, imeAction = ImeAction.Next)
+        TextFieldHeight(height = height, onTextChange = { height = it}, imeAction = ImeAction.Done)
         TextField(
-            value = age,
-            onValueChange = {
-                if (it.length <= 6){
-                    age = it
-                }
-            },
-            label = {Text("Age")},
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Next)
-        )
-        TextField(
-            value = weight,
-            onValueChange = {
-                if (it.length <= 6){
-                    weight = it
-                }
-            },
-            label = {Text("Weight(kg)")},
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Next)
-        )
-        TextField(
-            value = height,
-            onValueChange = {
-                if (it.length <= 5){
-                    height = it
-                }
-            },
-            label = {Text("Height(cm)")},
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-        )
-        TextField(
-            value = bmi.bmi.toString(), // change the value to repository's bmiState
+            value = bmi.bmi.toString(),
             onValueChange = {},
             label = { Text(text = "BMI")},
             readOnly = true
         )
         Button(
             onClick = {
-                if (age.isEmpty() || age.toInt() < 0 || age.toInt() > 80){
-                    Toast.makeText(context, "Please enter age between 0 to 80", Toast.LENGTH_SHORT).show()
-                } else if (weight.isEmpty() || weight.toInt() < 40 || weight.toInt() > 160){
-                    Toast.makeText(context, "Please enter weight between 40 kg and 160 kg", Toast.LENGTH_SHORT).show()
-                } else if (height.isEmpty() || height.toInt() < 130 || height.toInt() > 230){
-                    Toast.makeText(context, "Please enter height between 130 cm and 230 cm", Toast.LENGTH_SHORT).show()
-                } else{
+//                if (age.isEmpty() || age.toInt() < 0 || age.toInt() > 80){
+//                    Toast.makeText(context, "Please enter age between 0 to 80", Toast.LENGTH_SHORT).show()
+//                } else if (weight.isEmpty() || weight.toInt() < 40 || weight.toInt() > 160){
+//                    Toast.makeText(context, "Please enter weight between 40 kg and 160 kg", Toast.LENGTH_SHORT).show()
+//                } else if (height.isEmpty() || height.toInt() < 130 || height.toInt() > 230){
+//                    Toast.makeText(context, "Please enter height between 130 cm and 230 cm", Toast.LENGTH_SHORT).show()
+//                } else{
                     viewModel.getBmiFromApi(age, weight, height)
                     //bmi = viewModel.bmiState.value.bmi.toString()
-                }
+//                }
             }
         ){
             Text(text = "Submit")
         }
     }
+}
 
-
+@Preview(showBackground = true)
+@Composable
+fun Bmi_Screen_Preview(){
+    Bodybuilder {
+        Bmi_Screen()
+    }
 }
