@@ -1,9 +1,7 @@
-package com.example.bodybuilder.entities.BmiData
+package com.example.bodybuilder.data.BmiData
 
-import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "BmiData")
 data class BmiData(

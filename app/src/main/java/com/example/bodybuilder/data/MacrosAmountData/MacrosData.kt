@@ -1,4 +1,4 @@
-package com.example.bodybuilder.entities.MacrosAmountData
+package com.example.bodybuilder.data.MacrosAmountData
 
 data class MacrosData(
     var protein: Float?,

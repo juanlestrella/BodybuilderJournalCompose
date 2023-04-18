@@ -5,7 +5,6 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -13,13 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bodybuilder.ui.theme.Bodybuilder
-import com.example.bodybuilder.viewmodels.ProfileViewModel
+import com.example.bodybuilder.viewmodels.BmiViewModel
 
 @Composable
 fun Bmi_Screen(){
@@ -54,7 +52,7 @@ fun BmiBodyContent(
     // val focusManager = LocalFocusManager.current
     val context = LocalContext.current as Activity
 
-    val viewModel: ProfileViewModel = hiltViewModel()
+    val viewModel: BmiViewModel = hiltViewModel()
 
     var age by rememberSaveable{ mutableStateOf("") }
     var weight by rememberSaveable { mutableStateOf("") }

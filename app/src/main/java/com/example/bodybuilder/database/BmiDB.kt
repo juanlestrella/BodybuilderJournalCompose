@@ -1,7 +1,7 @@
 package com.example.bodybuilder.database
 
 import androidx.room.*
-import com.example.bodybuilder.entities.BmiData.BmiData
+import com.example.bodybuilder.data.BmiData.BmiData
 
 @Dao
 interface BmiDao {

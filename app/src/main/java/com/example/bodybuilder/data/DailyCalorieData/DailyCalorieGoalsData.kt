@@ -1,4 +1,4 @@
-package com.example.bodybuilder.entities.DailyCalorieData
+package com.example.bodybuilder.data.DailyCalorieData
 
 data class DailyCalorieGoalsData(
     val maintain: Number?,

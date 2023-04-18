@@ -1,6 +1,6 @@
 package com.example.bodybuilder.response
 
-import com.example.bodybuilder.entities.MacrosAmountData.MacrosAmountData
+import com.example.bodybuilder.data.MacrosAmountData.MacrosAmountData
 
 data class MacrosAmountsResponse(
     val status_code: Int,

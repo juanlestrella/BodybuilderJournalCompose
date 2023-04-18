@@ -12,6 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.bodybuilder.viewmodels.BodyFatViewModel
 
 @Composable
 fun BodyFat_Screen(){
@@ -37,13 +42,15 @@ fun BodyFat_Screen(){
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalLifecycleComposeApi::class)
 @Composable
 fun BodyFatContent(
     modifier: Modifier = Modifier,
     contentPaddingValues: PaddingValues
 ) {
     val context = LocalContext.current as Activity
+
+    val viewModel : BodyFatViewModel = hiltViewModel()
 
     var age by rememberSaveable{ mutableStateOf("") }
     var weight by rememberSaveable { mutableStateOf("") }
@@ -55,6 +62,8 @@ fun BodyFatContent(
     var genderExpanded by remember { mutableStateOf(false) }
     val genderOptions = listOf("male", "female")
     var selectedGender by remember { mutableStateOf(genderOptions[0]) }
+
+    val bodyFat by viewModel.bodyFat.collectAsStateWithLifecycle()
 
     Column(
         modifier = modifier.padding(paddingValues = contentPaddingValues)
@@ -101,6 +110,7 @@ fun BodyFatContent(
         TextFieldNeck(neck = neck, onTextChange = {neck = it}, imeAction = ImeAction.Next)
         TextFieldWaist(waist = waist, onTextChange = {waist = it}, imeAction = ImeAction.Next)
         TextFieldHip(hip = hip, onTextChange = {hip = it}, imeAction = ImeAction.Done)
+        Text(text = bodyFat.toString())
         Button(
             onClick = {
                 if (age.isEmpty() || age.toInt() < 0 || age.toInt() > 80){
@@ -116,8 +126,8 @@ fun BodyFatContent(
                 }else if (hip.isEmpty() || hip.toInt() < 40 || hip.toInt() > 130){
                     Toast.makeText(context, "Please enter hip measurement between 40 cm and 130 cm", Toast.LENGTH_SHORT).show()
                 }else{
-                    //viewModel.getBmiFromApi(age, weight, height)
-                    Toast.makeText(context, "Submitted", Toast.LENGTH_SHORT).show()
+                    viewModel.getBodyFatFromApi(age, selectedGender, weight, height, neck, waist, hip)
+                    Toast.makeText(context, bodyFat.toString(), Toast.LENGTH_SHORT).show()
                 }
             }
         ){

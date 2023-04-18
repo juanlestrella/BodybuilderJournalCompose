@@ -1,6 +1,6 @@
 package com.example.bodybuilder.response
 
-import com.example.bodybuilder.entities.BmiData.BmiData
+import com.example.bodybuilder.data.BmiData.BmiData
 
 
 data class BmiResponse(

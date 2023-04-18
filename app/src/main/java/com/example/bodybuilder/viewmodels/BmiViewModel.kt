@@ -3,7 +3,7 @@ package com.example.bodybuilder.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.bodybuilder.entities.BmiData.BmiData
+import com.example.bodybuilder.data.BmiData.BmiData
 import com.example.bodybuilder.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,11 +14,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileViewModel @Inject constructor(
+class BmiViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel()
 {
-    private val tag = ProfileViewModel::class.simpleName
+    private val tag = BmiViewModel::class.simpleName
 
     private val _bmiState = MutableStateFlow(BmiData(0.toFloat(), "",""))
     val bmiState: StateFlow<BmiData> = _bmiState.asStateFlow()
@@ -43,7 +43,7 @@ class ProfileViewModel @Inject constructor(
     fun getAllBmiFromDatabase(){
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                _bmiState.value = repository.getBmiFromDatabase()
+                //_bmiState.value = repository.getBmiFromDatabase()
                 //Log.i(tag, bmiState.toString())
             } catch (e : Exception) {
                 e.message?.let { Log.e(tag, it) }

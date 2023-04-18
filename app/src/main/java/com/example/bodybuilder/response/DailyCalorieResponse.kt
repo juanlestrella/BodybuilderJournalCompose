@@ -1,6 +1,6 @@
 package com.example.bodybuilder.response
 
-import com.example.bodybuilder.entities.DailyCalorieData.DailyCalorieData
+import com.example.bodybuilder.data.DailyCalorieData.DailyCalorieData
 
 data class DailyCalorieResponse(
     var status_code: Number,
