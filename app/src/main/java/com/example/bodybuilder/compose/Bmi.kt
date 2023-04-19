@@ -67,7 +67,7 @@ fun BmiBodyContent(
         TextFieldWeight(weight = weight, onTextChange = {weight = it}, imeAction = ImeAction.Next)
         TextFieldHeight(height = height, onTextChange = { height = it}, imeAction = ImeAction.Done)
         TextField(
-            value = bmi.bmi.toString(),
+            value = bmi.toString(),
             onValueChange = {},
             label = { Text(text = "BMI")},
             readOnly = true

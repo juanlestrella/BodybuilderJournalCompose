@@ -110,7 +110,12 @@ fun BodyFatContent(
         TextFieldNeck(neck = neck, onTextChange = {neck = it}, imeAction = ImeAction.Next)
         TextFieldWaist(waist = waist, onTextChange = {waist = it}, imeAction = ImeAction.Next)
         TextFieldHip(hip = hip, onTextChange = {hip = it}, imeAction = ImeAction.Done)
-        Text(text = bodyFat.toString())
+        TextField(
+            value = bodyFat.toString(),
+            onValueChange = {},
+            label = { Text(text = "Body Fat")},
+            readOnly = true
+        )
         Button(
             onClick = {
                 if (age.isEmpty() || age.toInt() < 0 || age.toInt() > 80){

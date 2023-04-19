@@ -27,7 +27,7 @@ class Repository @Inject constructor(
     private val _bmi = MutableStateFlow<BmiData>(BmiData(0.toFloat(), "", ""))
     val bmi: StateFlow<BmiData> = _bmi.asStateFlow()
 
-    private val _bodyFat = MutableStateFlow<BodyFatData>(BodyFatData(0, "", 0, 0,0))
+    private val _bodyFat = MutableStateFlow<BodyFatData>(BodyFatData(0.toFloat(), "", 0.toFloat(), 0.toFloat(),0.toFloat()))
     val bodyFat: StateFlow<BodyFatData> = _bodyFat.asStateFlow()
 
     suspend fun getBmiFromApi(age: Int, weight: Float, height: Float){
