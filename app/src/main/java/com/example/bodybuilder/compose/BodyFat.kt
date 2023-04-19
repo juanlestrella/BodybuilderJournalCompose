@@ -19,13 +19,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bodybuilder.viewmodels.BodyFatViewModel
 
 @Composable
-fun BodyFat_Screen(){
+fun BodyFatScreen(){
     val scaffoldState = rememberScaffoldState()
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
             TopAppBar(
-                title = { Text("Home", color = Color.Red) },
+                title = { Text("Body Fat", color = Color.Red) },
                 backgroundColor = MaterialTheme.colors.background,
             )
         },

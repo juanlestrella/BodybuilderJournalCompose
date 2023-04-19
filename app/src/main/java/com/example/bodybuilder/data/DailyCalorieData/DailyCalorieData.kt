@@ -2,5 +2,5 @@ package com.example.bodybuilder.data.DailyCalorieData
 
 data class DailyCalorieData(
     val BMR: Int?,
-    val goals: DailyCalorieData?
+    val goals: DailyCalorieGoalsData?
 )

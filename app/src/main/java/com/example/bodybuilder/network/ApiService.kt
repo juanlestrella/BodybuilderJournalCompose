@@ -56,8 +56,8 @@ interface ApiService {
 
     /**
      * TODO: Api calls
-     * 1) BMI (Ongoing) - need to store to Room
-     * 2) Body Fat Percentage
+     * 1) BMI - Done
+     * 2) Body Fat Percentage - Done
      * 3) Daily Calorie Required
      * 4) Macros
      */

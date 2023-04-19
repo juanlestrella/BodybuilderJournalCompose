@@ -20,7 +20,7 @@ import com.example.bodybuilder.ui.theme.Bodybuilder
 import com.example.bodybuilder.viewmodels.BmiViewModel
 
 @Composable
-fun Bmi_Screen(){
+fun BmiScreen(){
     val scaffoldState = rememberScaffoldState()
     Scaffold(
         scaffoldState = scaffoldState,
@@ -95,6 +95,6 @@ fun BmiBodyContent(
 @Composable
 fun Bmi_Screen_Preview(){
     Bodybuilder {
-        Bmi_Screen()
+        BmiScreen()
     }
 }
