@@ -1,8 +1,7 @@
 package com.example.bodybuilder.compose
 
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.text.input.ImeAction
@@ -94,4 +93,48 @@ fun TextFieldHip(hip:String, onTextChange: (String) -> Unit, imeAction: ImeActio
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = imeAction)
     )
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun Spinner(selected: String, options: List<String>, onTextChange: (String) -> Unit){
+    var expanded by remember { mutableStateOf(false) }
+    var selectedOption by remember { mutableStateOf(options[0]) }
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = {
+            expanded != expanded
+        },
+    ) {
+        TextField(
+            readOnly = true,
+            value = selectedOption,
+            onValueChange = {},
+            label = {Text(selected)},
+            trailingIcon = {
+                ExposedDropdownMenuDefaults.TrailingIcon(
+                    expanded = expanded
+                )
+            },
+            colors = ExposedDropdownMenuDefaults.textFieldColors()
+        )
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = {
+                expanded = false
+            }
+        ) {
+            options.forEach{ option ->
+                DropdownMenuItem(
+                    onClick = {
+                        selectedOption = option
+                        expanded = false
+                        onTextChange(option)
+                    }
+                ) {
+                    Text(text = selectedOption)
+                }
+            }
+        }
+    }
 }

@@ -2,6 +2,7 @@ package com.example.bodybuilder.network
 
 import com.example.bodybuilder.response.BmiResponse
 import com.example.bodybuilder.response.BodyFatResponse
+import com.example.bodybuilder.response.DailyCalorieResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -40,7 +41,7 @@ interface ApiService {
         @Query("height") height: Number,
         @Query("weight") weight: Number,
         @Query("activitylevel") activityLevel: String
-    ) : Response<Unit>
+    ) : Response<DailyCalorieResponse>
 
     @GET("macrocalculator")
     suspend fun getResponseMacroCalculator(

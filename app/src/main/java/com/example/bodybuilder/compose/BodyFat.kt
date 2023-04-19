@@ -59,7 +59,6 @@ fun BodyFatContent(
     var waist by rememberSaveable{ mutableStateOf("") }
     var hip by rememberSaveable{ mutableStateOf("") }
 
-    var genderExpanded by remember { mutableStateOf(false) }
     val genderOptions = listOf("male", "female")
     var selectedGender by remember { mutableStateOf(genderOptions[0]) }
 
@@ -69,42 +68,7 @@ fun BodyFatContent(
         modifier = modifier.padding(paddingValues = contentPaddingValues)
     ) {
         TextFieldAge(age = age, onTextChange = {age = it}, imeAction = ImeAction.Next)
-        ExposedDropdownMenuBox(
-            expanded = genderExpanded,
-            onExpandedChange = {
-                genderExpanded != genderExpanded
-            },
-        ) {
-            TextField(
-                readOnly = true,
-                value = selectedGender,
-                onValueChange = {},
-                label = {Text("Gender")},
-                trailingIcon = {
-                    ExposedDropdownMenuDefaults.TrailingIcon(
-                        expanded = genderExpanded
-                    )
-                },
-                colors = ExposedDropdownMenuDefaults.textFieldColors()
-            )
-            ExposedDropdownMenu(
-                expanded = genderExpanded,
-                onDismissRequest = {
-                    genderExpanded = false
-                }
-            ) {
-                genderOptions.forEach{ option ->
-                    DropdownMenuItem(
-                        onClick = {
-                            selectedGender = option
-                            genderExpanded = false
-                        }
-                    ) {
-                        Text(text = selectedGender)
-                    }
-                }
-            }
-        }
+        Spinner(selected = selectedGender, options = genderOptions, onTextChange = {selectedGender = it})
         TextFieldWeight(weight = weight, onTextChange = {weight = it}, imeAction = ImeAction.Next)
         TextFieldHeight(height = height, onTextChange = {height = it}, imeAction = ImeAction.Next)
         TextFieldNeck(neck = neck, onTextChange = {neck = it}, imeAction = ImeAction.Next)
