@@ -9,10 +9,13 @@ import com.example.bodybuilder.data.DailyCalorieData.DailyCalorieData
 import com.example.bodybuilder.data.DailyCalorieData.DailyCalorieGoalsData
 import com.example.bodybuilder.data.DailyCalorieData.GainWeightData
 import com.example.bodybuilder.data.DailyCalorieData.LossWeightData
+import com.example.bodybuilder.data.MacrosAmountData.MacrosAmountData
+import com.example.bodybuilder.data.MacrosAmountData.MacrosData
 import com.example.bodybuilder.response.BmiResponse
 import com.example.bodybuilder.network.ApiService
 import com.example.bodybuilder.response.BodyFatResponse
 import com.example.bodybuilder.response.DailyCalorieResponse
+import com.example.bodybuilder.response.MacrosAmountsResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -50,6 +53,18 @@ class Repository @Inject constructor(
             )
         )
     val dailyCalorie : StateFlow<DailyCalorieData> = _dailyCalorie.asStateFlow()
+
+    private val _macroCalculator = MutableStateFlow(
+        MacrosAmountData(
+            0.toFloat(),
+            MacrosData(0.toFloat(),0.toFloat(),0.toFloat()), // balanced
+            MacrosData(0.toFloat(),0.toFloat(),0.toFloat()), // low fat
+            MacrosData(0.toFloat(),0.toFloat(),0.toFloat()), // low carbs
+            MacrosData(0.toFloat(),0.toFloat(),0.toFloat()), // high protein
+        )
+    )
+    val macroCalculator : StateFlow<MacrosAmountData> = _macroCalculator.asStateFlow()
+
 
     suspend fun getBmiFromApi(age: Int, weight: Float, height: Float){
         withContext(Dispatchers.IO){
@@ -114,6 +129,34 @@ class Repository @Inject constructor(
                 _dailyCalorie.value = response.body()!!.data
             } else {
                 response.errorBody()?.string()?.let { Log.e(tag, "$it (Daily Calorie Error)") }
+            }
+        }
+    }
+
+    suspend fun getMacrosCalculatorFromApi(
+        age: Int,
+        gender: String,
+        height: Number,
+        weight: Number,
+        activityLevel: Number,
+        goal: String
+    ){
+        withContext(Dispatchers.IO){
+            val response: Response<MacrosAmountsResponse> =
+                api.getResponseMacroCalculator(
+                    Constants.KEY,
+                    Constants.HOST,
+                    age,
+                    gender,
+                    height,
+                    weight,
+                    activityLevel,
+                    goal
+                )
+            if(response.isSuccessful){
+                _macroCalculator.value = response.body()!!.data
+            } else {
+                response.errorBody()?.let { Log.e(tag, "$it (Macros Calculator Error") }
             }
         }
     }

@@ -3,6 +3,7 @@ package com.example.bodybuilder.network
 import com.example.bodybuilder.response.BmiResponse
 import com.example.bodybuilder.response.BodyFatResponse
 import com.example.bodybuilder.response.DailyCalorieResponse
+import com.example.bodybuilder.response.MacrosAmountsResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -53,7 +54,7 @@ interface ApiService {
         @Query("weight") weight: Number,
         @Query("activitylevel") activityLevel: Number,
         @Query("goal") goal: String //
-    ) : Response<Unit>
+    ) : Response<MacrosAmountsResponse>
 
     /**
      * TODO: Api calls

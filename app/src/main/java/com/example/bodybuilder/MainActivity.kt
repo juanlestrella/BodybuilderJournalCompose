@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import com.example.bodybuilder.compose.BmiScreen
 import com.example.bodybuilder.compose.BodyFatScreen
 import com.example.bodybuilder.compose.DailyCalorieScreen
+import com.example.bodybuilder.compose.MacroCalculatorScreen
 import com.example.bodybuilder.ui.theme.Bodybuilder
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,7 +29,8 @@ class MainActivity : ComponentActivity() {
                     //HomeScreen()
                     //BmiScreen()
                     //BodyFatScreen()
-                    DailyCalorieScreen()
+                    //DailyCalorieScreen()
+                    MacroCalculatorScreen()
                 }
             }
         }
