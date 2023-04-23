@@ -68,7 +68,7 @@ fun BodyFatContent(
         modifier = modifier.padding(paddingValues = contentPaddingValues)
     ) {
         TextFieldAge(age = age, onTextChange = {age = it}, imeAction = ImeAction.Next)
-        Spinner(selected = selectedGender, options = genderOptions, onTextChange = {selectedGender = it})
+        Spinner(selected = selectedGender, options = genderOptions, onTextChange = {selectedGender = it}, "Gender")
         TextFieldWeight(weight = weight, onTextChange = {weight = it}, imeAction = ImeAction.Next)
         TextFieldHeight(height = height, onTextChange = {height = it}, imeAction = ImeAction.Next)
         TextFieldNeck(neck = neck, onTextChange = {neck = it}, imeAction = ImeAction.Next)
@@ -96,7 +96,7 @@ fun BodyFatContent(
                     Toast.makeText(context, "Please enter hip measurement between 40 cm and 130 cm", Toast.LENGTH_SHORT).show()
                 }else{
                     viewModel.getBodyFatFromApi(age, selectedGender, weight, height, neck, waist, hip)
-                    Toast.makeText(context, bodyFat.toString(), Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, bodyFat.toString(), Toast.LENGTH_SHORT).show()
                 }
             }
         ){

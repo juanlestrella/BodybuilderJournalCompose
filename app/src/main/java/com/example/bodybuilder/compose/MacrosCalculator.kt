@@ -87,11 +87,11 @@ fun MacroCalculatorContent(
         modifier = modifier.padding(paddingValues = contentPaddingValues)
     ){
         TextFieldAge(age = age, onTextChange = {age = it}, imeAction = ImeAction.Next)
-        Spinner(selected = selectedGender, options = genderOptions,onTextChange = {selectedGender = it})
+        Spinner(selected = selectedGender, options = genderOptions,onTextChange = {selectedGender = it}, "Gender")
         TextFieldHeight(height = height, onTextChange = {height = it}, imeAction = ImeAction.Next)
         TextFieldWeight(weight = weight, onTextChange = {weight = it}, imeAction = ImeAction.Next)
-        Spinner(selected = activityLevelSelected.toString(), options = activityLevelsOptions.map{it.toString()}.toList(),onTextChange = {activityLevelSelected = it.toInt()})
-        Spinner(selected = selectedGoal, options = goalOptions,onTextChange = {selectedGoal = it})
+        Spinner(selected = activityLevelSelected.toString(), options = activityLevelsOptions.map{it.toString()}.toList(),onTextChange = {activityLevelSelected = it.toInt()}, "Activity Level")
+        Spinner(selected = selectedGoal, options = goalOptions,onTextChange = {selectedGoal = it}, "Goal")
         TextField(
             value = macroCalculator.toString(),
             onValueChange = {},
@@ -108,7 +108,7 @@ fun MacroCalculatorContent(
                     Toast.makeText(context, "Please enter height between 130 cm and 230 cm", Toast.LENGTH_SHORT).show()
                 } else{
                     viewModel.getMacrosCalculatorFromApi(age, selectedGender, height, weight, activityLevelSelected, selectedGoal)
-                    Toast.makeText(context, macroCalculator.toString(), Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, macroCalculator.toString(), Toast.LENGTH_SHORT).show()
                 }
             }
         ){

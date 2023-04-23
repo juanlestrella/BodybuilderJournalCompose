@@ -76,10 +76,10 @@ fun DailyCalorieContent(
         modifier = modifier.padding(paddingValues = contentPaddingValues)
     ) {
         TextFieldAge(age = age, onTextChange = {age = it}, imeAction = ImeAction.Next)
-        Spinner(selected = selectedGender, options = genderOptions,onTextChange = {selectedGender = it})
+        Spinner(selected = selectedGender, options = genderOptions,onTextChange = {selectedGender = it}, "Gender")
         TextFieldHeight(height = height, onTextChange = {height = it}, imeAction = ImeAction.Next)
         TextFieldWeight(weight = weight, onTextChange = {weight = it}, imeAction = ImeAction.Next)
-        Spinner(selected = activityLevelSelected, options = activityLevelsOptions,onTextChange = {activityLevelSelected[0]})
+        Spinner(selected = activityLevelSelected, options = activityLevelsOptions,onTextChange = {activityLevelSelected[0]}, "Activity Level")
         TextField(
             value = dailyCalorie.toString(),
             onValueChange = {},
@@ -96,7 +96,7 @@ fun DailyCalorieContent(
                     Toast.makeText(context, "Please enter height between 130 cm and 230 cm", Toast.LENGTH_SHORT).show()
                 } else{
                     viewModel.getDailyCalorieFromApi(age, selectedGender, height, weight, activityLevelSelected)
-                    Toast.makeText(context, dailyCalorie.toString(), Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, dailyCalorie.toString(), Toast.LENGTH_SHORT).show()
                 }
             }
         ){

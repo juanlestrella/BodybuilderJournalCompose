@@ -30,7 +30,7 @@ class Repository @Inject constructor(
 ) {
 
     private val tag = Repository::class.simpleName
-
+    /***** STATES *****/
     private val _bmi = MutableStateFlow(BmiData(0.toFloat(), "", ""))
     val bmi: StateFlow<BmiData> = _bmi.asStateFlow()
 
@@ -65,7 +65,7 @@ class Repository @Inject constructor(
     )
     val macroCalculator : StateFlow<MacrosAmountData> = _macroCalculator.asStateFlow()
 
-
+    /***** API FUNCTIONS *****/
     suspend fun getBmiFromApi(age: Int, weight: Float, height: Float){
         withContext(Dispatchers.IO){
             val response : Response<BmiResponse> = api.getResponseBmi(Constants.KEY, Constants.HOST, age, weight, height)
@@ -162,6 +162,7 @@ class Repository @Inject constructor(
     }
 }
 
+/***** LOCAL DATABASE FUNCTIONS *****/
 //    suspend fun insertBmiToDatabase(){
 //        // if (_bmiResponse.value) // check if stateflow has actual value
 //        bmiDao.insertBmi(_bmi.value)

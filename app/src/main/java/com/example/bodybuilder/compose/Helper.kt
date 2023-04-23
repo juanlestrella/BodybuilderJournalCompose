@@ -97,20 +97,20 @@ fun TextFieldHip(hip:String, onTextChange: (String) -> Unit, imeAction: ImeActio
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun Spinner(selected: String, options: List<String>, onTextChange: (String) -> Unit){
+fun Spinner(selected: String, options: List<String>, onTextChange: (String) -> Unit, label: String){
     var expanded by remember { mutableStateOf(false) }
     var selectedOption by remember { mutableStateOf(options[0]) }
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = {
-            expanded != expanded
+            expanded = !expanded
         },
     ) {
         TextField(
             readOnly = true,
             value = selectedOption,
             onValueChange = {},
-            label = {Text(selected)},
+            label = {Text(label)},
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(
                     expanded = expanded
@@ -129,10 +129,10 @@ fun Spinner(selected: String, options: List<String>, onTextChange: (String) -> U
                     onClick = {
                         selectedOption = option
                         expanded = false
-                        onTextChange(option)
+                        onTextChange(selectedOption)
                     }
                 ) {
-                    Text(text = selectedOption)
+                    Text(text = option)
                 }
             }
         }
