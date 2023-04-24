@@ -68,7 +68,7 @@ fun HomeScreen() {
             }
         }
     ){ contentPadding ->
-        BodyContent(contentPaddingValues = contentPadding)
+        HomeBodyContent(contentPaddingValues = contentPadding)
     }
 }
 
@@ -76,7 +76,7 @@ fun HomeScreen() {
  * A LazyColumn of content folder from Room DB
  */
 @Composable
-fun BodyContent(
+fun HomeBodyContent(
     modifier: Modifier = Modifier,
     contentPaddingValues: PaddingValues
 ){
