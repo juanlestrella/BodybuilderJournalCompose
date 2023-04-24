@@ -19,7 +19,7 @@ class BodyFatViewModel @Inject constructor(
 ): ViewModel(){
     private val tag = BodyFatViewModel::class.simpleName
 
-    private val _bodyFat = MutableStateFlow<BodyFatData>(BodyFatData(0.toFloat(), "", 0.toFloat(), 0.toFloat(),0.toFloat()))
+    private val _bodyFat = MutableStateFlow(BodyFatData(0.toFloat(), "", 0.toFloat(), 0.toFloat(),0.toFloat()))
     val bodyFat: StateFlow<BodyFatData> = _bodyFat.asStateFlow()
 
     fun getBodyFatFromApi(

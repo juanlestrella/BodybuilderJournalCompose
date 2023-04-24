@@ -3,7 +3,6 @@ package com.example.bodybuilder.compose
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 
@@ -97,7 +96,7 @@ fun TextFieldHip(hip:String, onTextChange: (String) -> Unit, imeAction: ImeActio
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun Spinner(selected: String, options: List<String>, onTextChange: (String) -> Unit, label: String){
+fun Spinner(options: List<String>, onTextChange: (String) -> Unit, label: String){
     var expanded by remember { mutableStateOf(false) }
     var selectedOption by remember { mutableStateOf(options[0]) }
     ExposedDropdownMenuBox(

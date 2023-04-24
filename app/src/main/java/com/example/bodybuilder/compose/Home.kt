@@ -25,13 +25,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bodybuilder.R
 import com.example.bodybuilder.ui.theme.Bodybuilder
-import java.nio.channels.FileChannel.MapMode
 
 
 /**
@@ -51,7 +49,7 @@ import java.nio.channels.FileChannel.MapMode
 
 @Composable
 fun HomeScreen() {
-    // can be used to show Snackbar, open/close drawer
+    // can be used to show Snack bar, open/close drawer
     val scaffoldState = rememberScaffoldState()
     Scaffold(
         scaffoldState = scaffoldState,

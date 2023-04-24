@@ -28,9 +28,9 @@ class MainActivity : ComponentActivity() {
                 ) {
                     //HomeScreen()
                     //BmiScreen()
-                    //BodyFatScreen()
+                    BodyFatScreen()
                     //DailyCalorieScreen()
-                    MacroCalculatorScreen()
+                    //MacroCalculatorScreen()
                 }
             }
         }

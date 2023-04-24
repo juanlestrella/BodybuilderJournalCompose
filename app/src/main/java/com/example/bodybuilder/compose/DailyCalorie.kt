@@ -12,9 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.bodybuilder.ui.theme.Bodybuilder
 import com.example.bodybuilder.viewmodels.DailyCalorieViewModel
 
 @Composable
@@ -67,8 +69,8 @@ fun DailyCalorieContent(
      * ‘level_5’ : “Intense exercise 6-7 times/week”,
      * ‘level_6’ : “Very intense exercise daily, or physical job”
      */
-    var activityLevelsOptions = listOf("level_1","level_2","level_3","level_4", "level_5", "level_6")
-    var activityLevelSelected by rememberSaveable { mutableStateOf(activityLevelsOptions[0]) }
+    val activityLevelsOptions = listOf("level_1","level_2","level_3","level_4", "level_5", "level_6")
+    val activityLevelSelected by rememberSaveable { mutableStateOf(activityLevelsOptions[0]) }
 
     val dailyCalorie by viewModel.dailyCalorie.collectAsStateWithLifecycle()
 
@@ -76,10 +78,10 @@ fun DailyCalorieContent(
         modifier = modifier.padding(paddingValues = contentPaddingValues)
     ) {
         TextFieldAge(age = age, onTextChange = {age = it}, imeAction = ImeAction.Next)
-        Spinner(selected = selectedGender, options = genderOptions,onTextChange = {selectedGender = it}, "Gender")
+        Spinner(options = genderOptions,onTextChange = {selectedGender = it}, "Gender")
         TextFieldHeight(height = height, onTextChange = {height = it}, imeAction = ImeAction.Next)
         TextFieldWeight(weight = weight, onTextChange = {weight = it}, imeAction = ImeAction.Next)
-        Spinner(selected = activityLevelSelected, options = activityLevelsOptions,onTextChange = {activityLevelSelected[0]}, "Activity Level")
+        Spinner(options = activityLevelsOptions,onTextChange = {activityLevelSelected[0]}, "Activity Level")
         TextField(
             value = dailyCalorie.toString(),
             onValueChange = {},
@@ -102,5 +104,13 @@ fun DailyCalorieContent(
         ){
             Text(text = "Submit")
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DailyCalorie_Screen_Preview(){
+    Bodybuilder {
+        DailyCalorieScreen()
     }
 }
