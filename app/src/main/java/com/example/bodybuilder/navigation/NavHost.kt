@@ -1,18 +1,20 @@
 package com.example.bodybuilder.navigation
 
-import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.bodybuilder.compose.*
+import com.example.bodybuilder.ui.theme.Bodybuilder
 
 @Composable
-fun NavHost(
-    modifier: Modifier = Modifier,
+fun AppNavHost(
+    modifier: Modifier,
     navController: NavHostController,
-    startDestination: String = "diary"
+    startDestination: String = "home",
 ){
     NavHost(
         modifier = modifier,
@@ -21,11 +23,12 @@ fun NavHost(
     ){
         composable("home") {
             HomeScreen(
-
+                modifier = modifier
             )
         }
         composable("diary") {
             DiaryScreen(
+                modifier = modifier,
                 onNavigateToBmi = { navController.navigate("bmi") },
                 onNavigateToBodyFat = { navController.navigate("bodyFat") },
                 onNavigateToDailyCalorie = { navController.navigate("dailyCalorie") },
@@ -34,23 +37,34 @@ fun NavHost(
         }
         composable("bmi") {
             BmiScreen(
-
+                modifier = modifier
             )
         }
         composable("bodyFat") {
             BodyFatScreen(
-
+                modifier = modifier
             )
         }
         composable("dailyCalorie") {
             DailyCalorieScreen(
-
+                modifier = modifier
             )
         }
         composable("macros") {
             MacroCalculatorScreen(
-
+                modifier = modifier
             )
         }
+    }
+}
+
+@Preview
+@Composable
+fun NavHostPreview(){
+    Bodybuilder {
+        AppNavHost(
+            modifier = Modifier,
+            navController = rememberNavController()
+        )
     }
 }

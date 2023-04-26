@@ -3,16 +3,15 @@ package com.example.bodybuilder.compose
 import android.app.Activity
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -20,34 +19,16 @@ import com.example.bodybuilder.ui.theme.Bodybuilder
 import com.example.bodybuilder.viewmodels.MacrosCalculatorViewModel
 
 @Composable
-fun MacroCalculatorScreen(){
-    val scaffoldState = rememberScaffoldState()
-    Scaffold(
-        scaffoldState = scaffoldState,
-        topBar = {
-            TopAppBar(
-                title = { Text("Macro Calculator", color = Color.Red) },
-                backgroundColor = MaterialTheme.colors.background,
-            )
-        },
-        bottomBar = {
-            /**
-             * TODO: Change this to BottomNavigation later after creating all the screens
-             */
-            BottomAppBar(backgroundColor = MaterialTheme.colors.background) {
-                Text(text = "Bottom App Bar", color = Color.Red)
-            }
-        }
-    ){ contentPadding ->
-        MacroCalculatorContent(contentPaddingValues = contentPadding)
-    }
+fun MacroCalculatorScreen(
+    modifier: Modifier
+){
+    MacroCalculatorContent(modifier = modifier)
 }
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun MacroCalculatorContent(
-    modifier: Modifier = Modifier,
-    contentPaddingValues: PaddingValues
+    modifier: Modifier
 ) {
     val context = LocalContext.current as Activity
 
@@ -86,7 +67,7 @@ fun MacroCalculatorContent(
     val macroCalculator by viewModel.macroCalculator.collectAsStateWithLifecycle()
 
     Column (
-        modifier = modifier.padding(paddingValues = contentPaddingValues)
+        modifier = modifier
     ){
         TextFieldAge(age = age, onTextChange = {age = it}, imeAction = ImeAction.Next)
         Spinner(options = genderOptions,onTextChange = {selectedGender = it}, "Gender")
@@ -110,7 +91,6 @@ fun MacroCalculatorContent(
                     Toast.makeText(context, "Please enter height between 130 cm and 230 cm", Toast.LENGTH_SHORT).show()
                 } else{
                     viewModel.getMacrosCalculatorFromApi(age, selectedGender, height, weight, activityLevelSelected, selectedGoal)
-                    //Toast.makeText(context, macroCalculator.toString(), Toast.LENGTH_SHORT).show()
                 }
             }
         ){
@@ -122,6 +102,6 @@ fun MacroCalculatorContent(
 @Composable
 fun MacrosCalculator_Screen_Preview(){
     Bodybuilder {
-        MacroCalculatorScreen()
+        MacroCalculatorScreen(Modifier.padding(bottom = 4.dp))
     }
 }

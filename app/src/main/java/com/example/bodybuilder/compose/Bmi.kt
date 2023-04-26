@@ -3,16 +3,15 @@ package com.example.bodybuilder.compose
 import android.app.Activity
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -20,34 +19,16 @@ import com.example.bodybuilder.ui.theme.Bodybuilder
 import com.example.bodybuilder.viewmodels.BmiViewModel
 
 @Composable
-fun BmiScreen(){
-    val scaffoldState = rememberScaffoldState()
-    Scaffold(
-        scaffoldState = scaffoldState,
-        topBar = {
-            TopAppBar(
-                title = { Text("Home", color = Color.Red) },
-                backgroundColor = MaterialTheme.colors.background,
-            )
-        },
-        bottomBar = {
-            /**
-             * TODO: Change this to BottomNavigation later after creating all the screens
-             */
-            BottomAppBar(backgroundColor = MaterialTheme.colors.background) {
-                Text(text = "Bottom App Bar", color = Color.Red)
-            }
-        }
-    ){ contentPadding ->
-        BmiBodyContent(contentPaddingValues = contentPadding)
-    }
+fun BmiScreen(
+    modifier: Modifier,
+){
+    BmiBodyContent(modifier = modifier)
 }
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun BmiBodyContent(
-    modifier: Modifier = Modifier,
-    contentPaddingValues: PaddingValues
+    modifier: Modifier
 ){
     // val focusManager = LocalFocusManager.current
     val context = LocalContext.current as Activity
@@ -61,7 +42,7 @@ fun BmiBodyContent(
     val bmi by viewModel.bmiState.collectAsStateWithLifecycle()
 
     Column(
-        modifier = modifier.padding(contentPaddingValues)
+        modifier = modifier
     ){
         TextFieldAge(age = age, onTextChange = {age = it}, imeAction = ImeAction.Next)
         TextFieldWeight(weight = weight, onTextChange = {weight = it}, imeAction = ImeAction.Next)
@@ -94,6 +75,6 @@ fun BmiBodyContent(
 @Composable
 fun Bmi_Screen_Preview(){
     Bodybuilder {
-        BmiScreen()
+        BmiScreen(Modifier.padding(bottom = 4.dp))
     }
 }

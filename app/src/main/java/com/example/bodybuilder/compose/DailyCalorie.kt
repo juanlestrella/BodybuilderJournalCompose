@@ -3,16 +3,15 @@ package com.example.bodybuilder.compose
 import android.app.Activity
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -20,37 +19,16 @@ import com.example.bodybuilder.ui.theme.Bodybuilder
 import com.example.bodybuilder.viewmodels.DailyCalorieViewModel
 
 @Composable
-fun DailyCalorieScreen(){
-    val scaffoldState = rememberScaffoldState()
-    Scaffold(
-        scaffoldState = scaffoldState,
-        topBar = {
-            TopAppBar(
-                title = { Text("Daily Calorie", color = Color.Red) },
-                backgroundColor = MaterialTheme.colors.background,
-            )
-        },
-        bottomBar = {
-            /**
-             * TODO: Change this to BottomNavigation later after creating all the screens
-             */
-            /**
-             * TODO: Change this to BottomNavigation later after creating all the screens
-             */
-            BottomAppBar(backgroundColor = MaterialTheme.colors.background) {
-                Text(text = "Bottom App Bar", color = Color.Red)
-            }
-        }
-    ){ contentPadding ->
-        DailyCalorieContent(contentPaddingValues = contentPadding)
-    }
+fun DailyCalorieScreen(
+    modifier: Modifier
+){
+    DailyCalorieContent(modifier = modifier)
 }
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun DailyCalorieContent(
-    modifier: Modifier =  Modifier,
-    contentPaddingValues: PaddingValues
+    modifier: Modifier,
 ) {
     val context = LocalContext.current as Activity
 
@@ -75,7 +53,7 @@ fun DailyCalorieContent(
     val dailyCalorie by viewModel.dailyCalorie.collectAsStateWithLifecycle()
 
     Column(
-        modifier = modifier.padding(paddingValues = contentPaddingValues)
+        modifier = modifier
     ) {
         TextFieldAge(age = age, onTextChange = {age = it}, imeAction = ImeAction.Next)
         Spinner(options = genderOptions,onTextChange = {selectedGender = it}, "Gender")
@@ -111,6 +89,6 @@ fun DailyCalorieContent(
 @Composable
 fun DailyCalorie_Screen_Preview(){
     Bodybuilder {
-        DailyCalorieScreen()
+        DailyCalorieScreen(Modifier.padding(bottom = 4.dp))
     }
 }

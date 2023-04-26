@@ -49,29 +49,9 @@ import com.example.bodybuilder.ui.theme.Bodybuilder
 
 @Composable
 fun HomeScreen(
-
+    modifier: Modifier
 ) {
-    // can be used to show Snack bar, open/close drawer
-    val scaffoldState = rememberScaffoldState()
-    Scaffold(
-        scaffoldState = scaffoldState,
-        topBar = {
-            TopAppBar(
-                title = {Text("Home", color = Color.Red)},
-                backgroundColor = MaterialTheme.colors.background,
-            )
-        },
-        bottomBar = {
-            /**
-             * TODO: Change this to BottomNavigation later after creating all the screens
-             */
-            BottomAppBar(backgroundColor = MaterialTheme.colors.background) {
-                Text(text = "Bottom App Bar", color = Color.Red)
-            }
-        }
-    ){ contentPadding ->
-        HomeBodyContent(contentPaddingValues = contentPadding)
-    }
+    HomeBodyContent()
 }
 
 /**
@@ -80,14 +60,13 @@ fun HomeScreen(
 @Composable
 fun HomeBodyContent(
     modifier: Modifier = Modifier,
-    contentPaddingValues: PaddingValues
 ){
     LazyColumn(
-        modifier = modifier.padding(contentPaddingValues),
+        modifier = modifier,
         userScrollEnabled = true
     ){
         items(10){ // Use Room table to determine the size of the LazyColumn
-            Spacer(modifier = modifier.height(12.dp)) // this helps avoid recomposition of the child composable function
+            Spacer(modifier = modifier.height(8.dp)) // this helps avoid recomposition of the child composable function
             HomeContentFolder()
         }
     }
@@ -221,6 +200,6 @@ fun BoxImage(
 @Composable
 fun Home_Screen_Preview(){
     Bodybuilder {
-        HomeScreen()
+        HomeScreen(Modifier.padding(bottom = 4.dp))
     }
 }
