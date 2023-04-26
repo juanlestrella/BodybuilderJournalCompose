@@ -1,11 +1,20 @@
 package com.example.bodybuilder.compose
 
+import android.media.Image
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun TextFieldAge(age:String, onTextChange: (String) -> Unit, imeAction: ImeAction){
@@ -97,7 +106,7 @@ fun TextFieldHip(hip:String, onTextChange: (String) -> Unit, imeAction: ImeActio
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun Spinner(selected: String, options: List<String>, onTextChange: (String) -> Unit, label: String){
+fun Spinner(options: List<String>, onTextChange: (String) -> Unit, label: String){
     var expanded by remember { mutableStateOf(false) }
     var selectedOption by remember { mutableStateOf(options[0]) }
     ExposedDropdownMenuBox(
@@ -136,5 +145,18 @@ fun Spinner(selected: String, options: List<String>, onTextChange: (String) -> U
                 }
             }
         }
+    }
+}
+
+@Composable
+fun ButtonDiary(icon: ImageVector /**Painter Type**/, label: String, onNavigateToDestination: () -> Unit){
+    Button(
+        onClick = onNavigateToDestination,
+        modifier = Modifier.padding(vertical = 4.dp)
+    ) {
+        //Image(painter = image, contentDescription = label)
+        Icon(icon, label)
+        Text(label)
+
     }
 }

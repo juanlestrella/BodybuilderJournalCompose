@@ -12,9 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.bodybuilder.ui.theme.Bodybuilder
 import com.example.bodybuilder.viewmodels.MacrosCalculatorViewModel
 
 @Composable
@@ -51,7 +53,7 @@ fun MacroCalculatorContent(
 
     val viewModel: MacrosCalculatorViewModel = hiltViewModel()
 
-    //todo: textfields and spinners
+    //todo: text fields and spinners
     var age by rememberSaveable{ mutableStateOf("") }
     val genderOptions = listOf("male", "female")
     var selectedGender: String by rememberSaveable { mutableStateOf(genderOptions[0]) }
@@ -87,11 +89,11 @@ fun MacroCalculatorContent(
         modifier = modifier.padding(paddingValues = contentPaddingValues)
     ){
         TextFieldAge(age = age, onTextChange = {age = it}, imeAction = ImeAction.Next)
-        Spinner(selected = selectedGender, options = genderOptions,onTextChange = {selectedGender = it}, "Gender")
+        Spinner(options = genderOptions,onTextChange = {selectedGender = it}, "Gender")
         TextFieldHeight(height = height, onTextChange = {height = it}, imeAction = ImeAction.Next)
         TextFieldWeight(weight = weight, onTextChange = {weight = it}, imeAction = ImeAction.Next)
-        Spinner(selected = activityLevelSelected.toString(), options = activityLevelsOptions.map{it.toString()}.toList(),onTextChange = {activityLevelSelected = it.toInt()}, "Activity Level")
-        Spinner(selected = selectedGoal, options = goalOptions,onTextChange = {selectedGoal = it}, "Goal")
+        Spinner(options = activityLevelsOptions.map{it.toString()}.toList(),onTextChange = {activityLevelSelected = it.toInt()}, "Activity Level")
+        Spinner(options = goalOptions,onTextChange = {selectedGoal = it}, "Goal")
         TextField(
             value = macroCalculator.toString(),
             onValueChange = {},
@@ -115,5 +117,11 @@ fun MacroCalculatorContent(
             Text(text = "Submit")
         }
     }
-
+}
+@Preview(showBackground = true)
+@Composable
+fun MacrosCalculator_Screen_Preview(){
+    Bodybuilder {
+        MacroCalculatorScreen()
+    }
 }

@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bodybuilder.viewmodels.BodyFatViewModel
@@ -42,7 +41,7 @@ fun BodyFatScreen(){
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalLifecycleComposeApi::class)
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun BodyFatContent(
     modifier: Modifier = Modifier,
@@ -68,7 +67,7 @@ fun BodyFatContent(
         modifier = modifier.padding(paddingValues = contentPaddingValues)
     ) {
         TextFieldAge(age = age, onTextChange = {age = it}, imeAction = ImeAction.Next)
-        Spinner(selected = selectedGender, options = genderOptions, onTextChange = {selectedGender = it}, "Gender")
+        Spinner(options = genderOptions, onTextChange = {selectedGender = it}, "Gender")
         TextFieldWeight(weight = weight, onTextChange = {weight = it}, imeAction = ImeAction.Next)
         TextFieldHeight(height = height, onTextChange = {height = it}, imeAction = ImeAction.Next)
         TextFieldNeck(neck = neck, onTextChange = {neck = it}, imeAction = ImeAction.Next)
