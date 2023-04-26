@@ -1,8 +1,10 @@
 package com.example.bodybuilder.compose
 
 import android.media.Image
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -158,5 +160,37 @@ fun ButtonDiary(icon: ImageVector /**Painter Type**/, label: String, onNavigateT
         Icon(icon, label)
         Text(label)
 
+    }
+}
+
+@Composable
+fun ButtonSubmit(isValid: Boolean, data: Any){
+    Button(
+        onClick = {
+            // Store data to room local data base then show it on a history list
+            if(isValid){
+                // add data to local database
+            }
+        }
+    ) {
+        Text(text = "Submit")
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun LazyColumnHistory(){
+    LazyColumn(
+        userScrollEnabled = true
+    ){
+        // add a header for lazycolumn = History
+        stickyHeader {
+            Text("History")
+        }
+
+        items(10){
+            // Show all the local database here
+            Text("Testing")
+        }
     }
 }
