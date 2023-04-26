@@ -82,7 +82,6 @@ fun BmiBodyContent(
                     Toast.makeText(context, "Please enter height between 130 cm and 230 cm", Toast.LENGTH_SHORT).show()
                 } else{
                     viewModel.getBmiFromApi(age, weight, height)
-                    //bmi = viewModel.bmiState.value.bmi.toString()
                 }
             }
         ){

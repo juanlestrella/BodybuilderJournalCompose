@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">BodybuilderJournalCompose</string>
+    <string name="home">home</string>
+    <string name="diary">diary</string>
+    <string name="bmi">bmi</string>
+    <string name="bodyFat">bodyFat</string>
+    <string name="dailyCalorie">dailyCalorie</string>
+    <string name="macros">macros</string>
+
 </resources>

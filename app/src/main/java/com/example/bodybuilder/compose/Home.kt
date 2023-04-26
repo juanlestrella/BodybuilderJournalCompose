@@ -48,7 +48,9 @@ import com.example.bodybuilder.ui.theme.Bodybuilder
  */
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+
+) {
     // can be used to show Snack bar, open/close drawer
     val scaffoldState = rememberScaffoldState()
     Scaffold(
