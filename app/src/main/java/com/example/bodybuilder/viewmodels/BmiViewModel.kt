@@ -38,6 +38,13 @@ class BmiViewModel @Inject constructor(
     }
 
     /**
+     * Insert the given BMI to the Room database
+     */
+    fun insertBmiToDatabase(data: BmiData){
+        repository.insertBmiToDB(data)
+    }
+
+    /**
      * TODO: Get the history of all inserted bmi
      */
     fun getAllBmiFromDatabase(){

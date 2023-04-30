@@ -77,7 +77,18 @@ fun BmiBodyContent(
             ) {
                 Text(text = "Calculate")
             }
-            ButtonSubmit(isBmiValid, bmi) // also add the local database for bmi\
+            //(isBmiValid, bmi) // also add the local database for bmi
+            Button(
+                onClick = {
+                    // Store data to room local data base then show it on a history list
+                    if(isBmiValid){
+                        // add data to local database
+                        viewModel.insertBmiToDatabase(bmi)
+                    }
+                }
+            ) {
+                Text(text = "Submit")
+            }
         }
         LazyColumnHistory() // pass in local database
     }

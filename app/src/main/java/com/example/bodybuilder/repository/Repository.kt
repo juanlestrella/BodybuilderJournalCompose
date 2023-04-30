@@ -17,6 +17,7 @@ import com.example.bodybuilder.response.BodyFatResponse
 import com.example.bodybuilder.response.DailyCalorieResponse
 import com.example.bodybuilder.response.MacrosAmountsResponse
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,6 +31,7 @@ class Repository @Inject constructor(
 ) {
 
     private val tag = Repository::class.simpleName
+
     /***** STATES *****/
     private val _bmi = MutableStateFlow(BmiData(0.toFloat(), "", ""))
     val bmi: StateFlow<BmiData> = _bmi.asStateFlow()
@@ -160,9 +162,14 @@ class Repository @Inject constructor(
             }
         }
     }
+    /***** LOCAL DATABASE FUNCTIONS *****/
+    fun insertBmiToDB(data: BmiData){
+        bmiDao.insertBmi(data)
+    }
+
 }
 
-/***** LOCAL DATABASE FUNCTIONS *****/
+
 //    suspend fun insertBmiToDatabase(){
 //        // if (_bmiResponse.value) // check if stateflow has actual value
 //        bmiDao.insertBmi(_bmi.value)
