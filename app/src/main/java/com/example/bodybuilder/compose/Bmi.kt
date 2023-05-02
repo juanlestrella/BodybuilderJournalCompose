@@ -2,10 +2,12 @@ package com.example.bodybuilder.compose
 
 import android.app.Activity
 import android.widget.Toast
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -28,7 +30,7 @@ fun BmiScreen(
     BmiBodyContent(modifier = modifier)
 }
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
+@OptIn(ExperimentalLifecycleComposeApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun BmiBodyContent(
     modifier: Modifier
@@ -90,7 +92,20 @@ fun BmiBodyContent(
                 Text(text = "Submit")
             }
         }
-        LazyColumnHistory() // pass in local database
+        LazyColumn(
+            userScrollEnabled = true
+        ){
+            // add a header for lazycolumn = History
+            stickyHeader {
+                Text("History")
+            }
+
+            items(10){
+                // Show all the local database here
+                viewModel.getAllBmiFromDatabase()
+                Text("Testing")
+            }
+        }
     }
 }
 

@@ -41,7 +41,9 @@ class BmiViewModel @Inject constructor(
      * Insert the given BMI to the Room database
      */
     fun insertBmiToDatabase(data: BmiData){
-        repository.insertBmiToDB(data)
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.insertBmiToDB(data)
+        }
     }
 
     /**

@@ -171,21 +171,3 @@ fun ButtonSubmit(isValid: Boolean, data: Any){
         Text(text = "Submit")
     }
 }
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun LazyColumnHistory(){
-    LazyColumn(
-        userScrollEnabled = true
-    ){
-        // add a header for lazycolumn = History
-        stickyHeader {
-            Text("History")
-        }
-
-        items(10){
-            // Show all the local database here
-            Text("Testing")
-        }
-    }
-}

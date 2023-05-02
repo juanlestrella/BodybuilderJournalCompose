@@ -2,17 +2,29 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d9ef6a0791d4f8ba1b22e6a8239677a3",
+    "identityHash": "7ce91389a7bd159aad98236f64252a44",
     "entities": [
       {
         "tableName": "BmiEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`bmi` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`bmi` REAL, `health` TEXT, `healthy_bmi_range` TEXT, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "bmi",
             "columnName": "bmi",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "health",
+            "columnName": "health",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
+          },
+          {
+            "fieldPath": "healthy_bmi_range",
+            "columnName": "healthy_bmi_range",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "id",
@@ -34,7 +46,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd9ef6a0791d4f8ba1b22e6a8239677a3')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7ce91389a7bd159aad98236f64252a44')"
     ]
   }
 }
