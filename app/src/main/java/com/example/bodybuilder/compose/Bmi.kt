@@ -1,18 +1,22 @@
 package com.example.bodybuilder.compose
 
 import android.app.Activity
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
@@ -45,6 +49,7 @@ fun BmiBodyContent(
     var height by rememberSaveable { mutableStateOf("") }
 
     val bmi by viewModel.bmiState.collectAsStateWithLifecycle()
+    val allBmi by viewModel.bmiListState.collectAsStateWithLifecycle()
 
     var isBmiValid by rememberSaveable { mutableStateOf(false) }
 
@@ -86,6 +91,8 @@ fun BmiBodyContent(
                     if(isBmiValid){
                         // add data to local database
                         viewModel.insertBmiToDatabase(bmi)
+                        viewModel.getAllBmiFromDatabase()
+                        Log.i("submit", allBmi.toString())
                     }
                 }
             ) {
@@ -97,14 +104,20 @@ fun BmiBodyContent(
         ){
             // add a header for lazycolumn = History
             stickyHeader {
-                Text("History")
+                Text("History", modifier = modifier.background(Color.Blue))
             }
 
-            items(10){
-                // Show all the local database here
-                viewModel.getAllBmiFromDatabase()
-                Text("Testing")
-            }
+            items(items = allBmi, itemContent = {item ->
+                Text(text = item.toString())
+
+            })
+
+
+//            {
+//                // Show all the local database here
+//                //viewModel.getAllBmiFromDatabase()
+//                //Text("Testing")
+//            }
         }
     }
 }

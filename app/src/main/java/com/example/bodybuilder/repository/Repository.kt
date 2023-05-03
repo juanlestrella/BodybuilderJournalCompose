@@ -167,6 +167,12 @@ class Repository @Inject constructor(
         bmiDao.insertBmi(BmiEntity(data.bmi, data.health, data.healthy_bmi_range))
     }
 
+    suspend fun getAllBmiFromDB() = withContext(Dispatchers.IO){
+        val allBmi = bmiDao.getAllBmi()
+        Log.i("repo all bmi", allBmi.toString())
+        return@withContext allBmi
+    }
+
 }
 
 

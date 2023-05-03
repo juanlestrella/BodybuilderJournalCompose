@@ -23,6 +23,8 @@ class BmiViewModel @Inject constructor(
     private val _bmiState = MutableStateFlow(BmiData(0.toFloat(), "",""))
     val bmiState: StateFlow<BmiData> = _bmiState.asStateFlow()
 
+    private val _bmiListState: MutableStateFlow<List<BmiData>> = MutableStateFlow(listOf())
+    val bmiListState: StateFlow<List<BmiData>> = _bmiListState
     /**
      * Send the api User's input then insert the response in _bmiState.value
      */
@@ -49,11 +51,13 @@ class BmiViewModel @Inject constructor(
     /**
      * TODO: Get the history of all inserted bmi
      */
-    fun getAllBmiFromDatabase(){
+    fun getAllBmiFromDatabase() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
+                //TODO how to store the returned getAllBmiFromDB
+                _bmiListState.value = repository.getAllBmiFromDB()
                 //_bmiState.value = repository.getBmiFromDatabase()
-                //Log.i(tag, bmiState.toString())
+                Log.i(tag, bmiState.toString())
             } catch (e : Exception) {
                 e.message?.let { Log.e(tag, it) }
             }
