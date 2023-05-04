@@ -36,6 +36,10 @@ class Repository @Inject constructor(
     private val _bmi = MutableStateFlow(BmiData(0.toFloat(), "", ""))
     val bmi: StateFlow<BmiData> = _bmi.asStateFlow()
 
+    private val _bmiListState: MutableStateFlow<List<BmiData>> = MutableStateFlow(listOf())
+    val bmiListState: StateFlow<List<BmiData>> = _bmiListState
+
+
     private val _bodyFat = MutableStateFlow(BodyFatData(0.toFloat(), "", 0.toFloat(), 0.toFloat(),0.toFloat()))
     val bodyFat: StateFlow<BodyFatData> = _bodyFat.asStateFlow()
 
@@ -165,23 +169,12 @@ class Repository @Inject constructor(
     /***** LOCAL DATABASE FUNCTIONS *****/
     suspend fun insertBmiToDB(data: BmiData) = withContext(Dispatchers.IO) {
         bmiDao.insertBmi(BmiEntity(data.bmi, data.health, data.healthy_bmi_range))
+        getAllBmiFromDB()
     }
 
     suspend fun getAllBmiFromDB() = withContext(Dispatchers.IO){
-        val allBmi = bmiDao.getAllBmi()
-        Log.i("repo all bmi", allBmi.toString())
-        return@withContext allBmi
+        // necessary because its also called in the VM's init
+        _bmiListState.value = bmiDao.getAllBmi()
     }
 
 }
-
-
-//    suspend fun insertBmiToDatabase(){
-//        // if (_bmiResponse.value) // check if stateflow has actual value
-//        bmiDao.insertBmi(_bmi.value)
-//    }
-
-//    suspend fun getBmiFromDatabase() : BmiData {
-//        Log.i("REPO", bmiDao.getBmi().toString())
-//        return bmiDao.getBmi()
-//    }

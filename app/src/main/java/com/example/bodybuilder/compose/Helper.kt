@@ -156,18 +156,3 @@ fun ButtonDiary(icon: ImageVector /**Painter Type**/, label: String, onNavigateT
 
     }
 }
-
-@Composable
-fun ButtonSubmit(isValid: Boolean, data: Any){
-    Button(
-        onClick = {
-            // Store data to room local data base then show it on a history list
-            if(isValid){
-                // add data to local database
-
-            }
-        }
-    ) {
-        Text(text = "Submit")
-    }
-}

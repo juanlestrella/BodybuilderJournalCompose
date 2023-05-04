@@ -84,14 +84,12 @@ fun BmiBodyContent(
             ) {
                 Text(text = "Calculate")
             }
-            //(isBmiValid, bmi) // also add the local database for bmi
             Button(
                 onClick = {
                     // Store data to room local data base then show it on a history list
                     if(isBmiValid){
-                        // add data to local database
+                        // add data to local database and get all bmi data
                         viewModel.insertBmiToDatabase(bmi)
-                        viewModel.getAllBmiFromDatabase()
                         Log.i("submit", allBmi.toString())
                     }
                 }
@@ -102,22 +100,20 @@ fun BmiBodyContent(
         LazyColumn(
             userScrollEnabled = true
         ){
-            // add a header for lazycolumn = History
+            // add a header for lazy column = History
             stickyHeader {
                 Text("History", modifier = modifier.background(Color.Blue))
             }
-
-            items(items = allBmi, itemContent = {item ->
+            items(
+                items = allBmi,
+                itemContent = {item ->
+                    /**
+                     * TODO:
+                     * showcase bmi, health category, and healthy bmi range
+                     * in a more appealing way like a table
+                     */
                 Text(text = item.toString())
-
             })
-
-
-//            {
-//                // Show all the local database here
-//                //viewModel.getAllBmiFromDatabase()
-//                //Text("Testing")
-//            }
         }
     }
 }

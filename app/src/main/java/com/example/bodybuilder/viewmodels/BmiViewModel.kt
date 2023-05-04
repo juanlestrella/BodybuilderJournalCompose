@@ -2,6 +2,8 @@ package com.example.bodybuilder.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.viewModelScope
 import com.example.bodybuilder.data.BmiData.BmiData
 import com.example.bodybuilder.repository.Repository
@@ -23,8 +25,10 @@ class BmiViewModel @Inject constructor(
     private val _bmiState = MutableStateFlow(BmiData(0.toFloat(), "",""))
     val bmiState: StateFlow<BmiData> = _bmiState.asStateFlow()
 
-    private val _bmiListState: MutableStateFlow<List<BmiData>> = MutableStateFlow(listOf())
+    // live observer of all BMIs
+    private val _bmiListState: StateFlow<List<BmiData>> = repository.bmiListState
     val bmiListState: StateFlow<List<BmiData>> = _bmiListState
+
     /**
      * Send the api User's input then insert the response in _bmiState.value
      */
@@ -47,20 +51,9 @@ class BmiViewModel @Inject constructor(
             repository.insertBmiToDB(data)
         }
     }
-
-    /**
-     * TODO: Get the history of all inserted bmi
-     */
-    fun getAllBmiFromDatabase() {
+    init{
         viewModelScope.launch(Dispatchers.IO) {
-            try {
-                //TODO how to store the returned getAllBmiFromDB
-                _bmiListState.value = repository.getAllBmiFromDB()
-                //_bmiState.value = repository.getBmiFromDatabase()
-                Log.i(tag, bmiState.toString())
-            } catch (e : Exception) {
-                e.message?.let { Log.e(tag, it) }
-            }
+            repository.getAllBmiFromDB()
         }
     }
 }
