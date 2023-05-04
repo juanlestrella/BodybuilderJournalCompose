@@ -7,7 +7,7 @@ import com.example.bodybuilder.models.BmiEntity
 @Dao
 interface BmiDao {
 
-    @Query("SELECT * FROM BmiEntity ORDER BY id DESC")
+    @Query("SELECT * FROM BmiEntity ORDER BY idBmi DESC")
     fun getAllBmi(): List<BmiData>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

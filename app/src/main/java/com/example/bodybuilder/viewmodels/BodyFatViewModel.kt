@@ -22,6 +22,9 @@ class BodyFatViewModel @Inject constructor(
     private val _bodyFat = MutableStateFlow(BodyFatData(0.toFloat(), "", 0.toFloat(), 0.toFloat(),0.toFloat()))
     val bodyFat: StateFlow<BodyFatData> = _bodyFat.asStateFlow()
 
+    private val _bodyFatList: StateFlow<List<BodyFatData>> = repository.bodyFatList
+    val bodyFatList: StateFlow<List<BodyFatData>> = _bodyFatList
+
     fun getBodyFatFromApi(
         age: String,
         gender: String,
@@ -46,6 +49,18 @@ class BodyFatViewModel @Inject constructor(
             } catch (e : Exception){
                 e.message?.let { Log.e(tag, it) }
             }
+        }
+    }
+
+    fun insertBodyFatToDatabase(data:BodyFatData){
+        viewModelScope.launch(Dispatchers.IO){
+            repository.insertBodyFatToDB(data)
+        }
+    }
+
+    init{
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.getAllBodyFatFromDB()
         }
     }
 }

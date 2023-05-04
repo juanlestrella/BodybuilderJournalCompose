@@ -8,5 +8,5 @@ data class BmiEntity(
     val bmi: Float?,
     val health: String?,
     val healthy_bmi_range: String?,
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) val idBmi: Int = 0,
 )

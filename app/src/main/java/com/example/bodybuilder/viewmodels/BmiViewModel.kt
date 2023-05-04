@@ -2,8 +2,6 @@ package com.example.bodybuilder.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.viewModelScope
 import com.example.bodybuilder.data.BmiData.BmiData
 import com.example.bodybuilder.repository.Repository
@@ -26,8 +24,8 @@ class BmiViewModel @Inject constructor(
     val bmiState: StateFlow<BmiData> = _bmiState.asStateFlow()
 
     // live observer of all BMIs
-    private val _bmiListState: StateFlow<List<BmiData>> = repository.bmiListState
-    val bmiListState: StateFlow<List<BmiData>> = _bmiListState
+    private val _bmiList: StateFlow<List<BmiData>> = repository.bmiList
+    val bmiList: StateFlow<List<BmiData>> = _bmiList
 
     /**
      * Send the api User's input then insert the response in _bmiState.value

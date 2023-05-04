@@ -6,6 +6,8 @@ import com.example.bodybuilder.BaseApplication
 import com.example.bodybuilder.Constants
 import com.example.bodybuilder.database.BmiDB
 import com.example.bodybuilder.database.BmiDao
+import com.example.bodybuilder.database.BodyFatDB
+import com.example.bodybuilder.database.BodyFatDao
 import com.example.bodybuilder.network.ApiService
 import com.example.bodybuilder.repository.Repository
 import com.squareup.moshi.Moshi
@@ -72,8 +74,25 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideRepository(api : ApiService, bmiDao: BmiDao) : Repository {
-        return Repository(api, bmiDao)
+    fun provideBodyFatDB(@ApplicationContext appContext: Context) =
+        Room.databaseBuilder(
+            appContext,
+            BodyFatDB::class.java,
+            "body_fat_db"
+        ).build()
+
+    @Singleton
+    @Provides
+    fun provideBodyFatDao(bodyFatDB: BodyFatDB) = bodyFatDB.bodyFatDao
+
+    @Singleton
+    @Provides
+    fun provideRepository(
+        api : ApiService,
+        bmiDao: BmiDao,
+        bodyFatDao: BodyFatDao
+    ) : Repository {
+        return Repository(api, bmiDao, bodyFatDao)
     }
 
 }

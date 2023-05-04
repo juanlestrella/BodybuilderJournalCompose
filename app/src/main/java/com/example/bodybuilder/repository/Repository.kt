@@ -11,7 +11,9 @@ import com.example.bodybuilder.data.DailyCalorieData.GainWeightData
 import com.example.bodybuilder.data.DailyCalorieData.LossWeightData
 import com.example.bodybuilder.data.MacrosAmountData.MacrosAmountData
 import com.example.bodybuilder.data.MacrosAmountData.MacrosData
+import com.example.bodybuilder.database.BodyFatDao
 import com.example.bodybuilder.models.BmiEntity
+import com.example.bodybuilder.models.BodyFatEntity
 import com.example.bodybuilder.response.BmiResponse
 import com.example.bodybuilder.network.ApiService
 import com.example.bodybuilder.response.BodyFatResponse
@@ -28,6 +30,7 @@ import javax.inject.Inject
 class Repository @Inject constructor(
     private val api: ApiService,
     private val bmiDao: BmiDao,
+    private val bodyFatDao: BodyFatDao
 ) {
 
     private val tag = Repository::class.simpleName
@@ -36,12 +39,15 @@ class Repository @Inject constructor(
     private val _bmi = MutableStateFlow(BmiData(0.toFloat(), "", ""))
     val bmi: StateFlow<BmiData> = _bmi.asStateFlow()
 
-    private val _bmiListState: MutableStateFlow<List<BmiData>> = MutableStateFlow(listOf())
-    val bmiListState: StateFlow<List<BmiData>> = _bmiListState
+    private val _bmiList: MutableStateFlow<List<BmiData>> = MutableStateFlow(listOf())
+    val bmiList: StateFlow<List<BmiData>> = _bmiList
 
 
     private val _bodyFat = MutableStateFlow(BodyFatData(0.toFloat(), "", 0.toFloat(), 0.toFloat(),0.toFloat()))
     val bodyFat: StateFlow<BodyFatData> = _bodyFat.asStateFlow()
+    
+    private val _bodyFatList : MutableStateFlow<List<BodyFatData>> = MutableStateFlow(listOf())
+    val bodyFatList: StateFlow<List<BodyFatData>> = _bodyFatList
 
     private val _dailyCalorie =
         MutableStateFlow(
@@ -167,14 +173,35 @@ class Repository @Inject constructor(
         }
     }
     /***** LOCAL DATABASE FUNCTIONS *****/
+    /***BMI***/
     suspend fun insertBmiToDB(data: BmiData) = withContext(Dispatchers.IO) {
         bmiDao.insertBmi(BmiEntity(data.bmi, data.health, data.healthy_bmi_range))
         getAllBmiFromDB()
     }
 
+    /**
+     * Necessary because its also called in the VM's init
+     */
     suspend fun getAllBmiFromDB() = withContext(Dispatchers.IO){
-        // necessary because its also called in the VM's init
-        _bmiListState.value = bmiDao.getAllBmi()
+        _bmiList.value = bmiDao.getAllBmi()
+    }
+
+    /***BODYFAT***/
+    suspend fun insertBodyFatToDB(data: BodyFatData) = withContext(Dispatchers.IO){
+        bodyFatDao.insertBodyFat(
+            BodyFatEntity(
+                data.bodyFat,
+                data.category,
+                data.bodyFatMass,
+                data.leanBodyMass,
+                data.bmi
+            )
+        )
+        getAllBodyFatFromDB()
+    }
+
+    suspend fun getAllBodyFatFromDB() = withContext(Dispatchers.IO){
+        _bodyFatList.value = bodyFatDao.getAllBodyFat()
     }
 
 }

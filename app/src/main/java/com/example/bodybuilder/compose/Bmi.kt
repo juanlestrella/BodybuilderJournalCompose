@@ -49,7 +49,7 @@ fun BmiBodyContent(
     var height by rememberSaveable { mutableStateOf("") }
 
     val bmi by viewModel.bmiState.collectAsStateWithLifecycle()
-    val allBmi by viewModel.bmiListState.collectAsStateWithLifecycle()
+    val allBmi by viewModel.bmiList.collectAsStateWithLifecycle()
 
     var isBmiValid by rememberSaveable { mutableStateOf(false) }
 
@@ -66,7 +66,10 @@ fun BmiBodyContent(
             readOnly = true
         )
         Row(
-            horizontalArrangement = Arrangement.spacedBy( alignment = Alignment.CenterHorizontally, space = 8.dp,)
+            horizontalArrangement = Arrangement.spacedBy(
+                alignment = Alignment.CenterHorizontally,
+                space = 8.dp,
+            )
         ) {
             Button (
                 onClick = {
@@ -78,7 +81,7 @@ fun BmiBodyContent(
                         Toast.makeText(context, "Please enter height between 130 cm and 230 cm", Toast.LENGTH_SHORT).show()
                     } else{
                         viewModel.getBmiFromApi(age, weight, height)
-                        isBmiValid = true
+                        isBmiValid = true // instead of this maybe we need to check if all params are valid for both calculate and submit
                     }
                 }
             ) {
@@ -90,7 +93,7 @@ fun BmiBodyContent(
                     if(isBmiValid){
                         // add data to local database and get all bmi data
                         viewModel.insertBmiToDatabase(bmi)
-                        Log.i("submit", allBmi.toString())
+                        //Log.i("submit", allBmi.toString())
                     }
                 }
             ) {
@@ -112,8 +115,9 @@ fun BmiBodyContent(
                      * showcase bmi, health category, and healthy bmi range
                      * in a more appealing way like a table
                      */
-                Text(text = item.toString())
-            })
+                    Text(text = item.toString())
+                }
+            )
         }
     }
 }
