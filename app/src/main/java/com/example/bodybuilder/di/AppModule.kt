@@ -4,10 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.bodybuilder.BaseApplication
 import com.example.bodybuilder.Constants
-import com.example.bodybuilder.database.BmiDB
-import com.example.bodybuilder.database.BmiDao
-import com.example.bodybuilder.database.BodyFatDB
-import com.example.bodybuilder.database.BodyFatDao
+import com.example.bodybuilder.database.*
 import com.example.bodybuilder.network.ApiService
 import com.example.bodybuilder.repository.Repository
 import com.squareup.moshi.Moshi
@@ -87,12 +84,40 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun provideDailyCalorieDB(@ApplicationContext appContext: Context) =
+        Room.databaseBuilder(
+            appContext,
+            DailyCalorieDB::class.java,
+            "daily_calorie_db"
+        ).build()
+
+    @Singleton
+    @Provides
+    fun provideDailyCalorieDao(dailyCalorieDB: DailyCalorieDB) = dailyCalorieDB.dailyCalorieDao
+
+    @Singleton
+    @Provides
+    fun provideMacrosDB(@ApplicationContext appContext: Context) =
+        Room.databaseBuilder(
+            appContext,
+            MacrosDB::class.java,
+            "macros_db"
+        ).build()
+
+    @Singleton
+    @Provides
+    fun provideMacrosDao(macrosDB: MacrosDB) = macrosDB.macrosDao
+
+    @Singleton
+    @Provides
     fun provideRepository(
         api : ApiService,
         bmiDao: BmiDao,
-        bodyFatDao: BodyFatDao
+        bodyFatDao: BodyFatDao,
+        dailyCalorieDao: DailyCalorieDao,
+        macrosDao: MacrosDao
     ) : Repository {
-        return Repository(api, bmiDao, bodyFatDao)
+        return Repository(api, bmiDao, bodyFatDao, dailyCalorieDao, macrosDao)
     }
 
 }

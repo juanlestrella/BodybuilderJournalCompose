@@ -38,6 +38,9 @@ class DailyCalorieViewModel @Inject constructor(
     )
     val dailyCalorie : StateFlow<DailyCalorieData> = _dailyCalorie.asStateFlow()
 
+    private val _dailyCalorieList: StateFlow<List<DailyCalorieData>> = repository.dailyCalorieList
+    val dailyCalorieList: StateFlow<List<DailyCalorieData>> = _dailyCalorieList
+
     fun getDailyCalorieFromApi(
         age: String,
         gender: String,
@@ -54,4 +57,16 @@ class DailyCalorieViewModel @Inject constructor(
             }
         }
     }
+
+    fun insertDailyCalorieToDatabase(data: DailyCalorieData){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.insertDailyCalorieToDB(data)
+        }
+    }
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.getAllDailyCalorieFromDB()
+        }
+    }
+
 }

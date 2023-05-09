@@ -2,12 +2,20 @@ package com.example.bodybuilder.compose
 
 import android.app.Activity
 import android.widget.Toast
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,7 +33,7 @@ fun DailyCalorieScreen(
     DailyCalorieContent(modifier = modifier)
 }
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
+@OptIn(ExperimentalLifecycleComposeApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun DailyCalorieContent(
     modifier: Modifier,
@@ -51,6 +59,7 @@ fun DailyCalorieContent(
     val activityLevelSelected by rememberSaveable { mutableStateOf(activityLevelsOptions[0]) }
 
     val dailyCalorie by viewModel.dailyCalorie.collectAsStateWithLifecycle()
+    val allDailyCalorie by viewModel.dailyCalorieList.collectAsStateWithLifecycle()
 
     Column(
         modifier = modifier
@@ -66,21 +75,54 @@ fun DailyCalorieContent(
             label = { Text(text = "Daily Calorie")},
             readOnly = true
         )
-        Button(
-            onClick = {
-                if (age.isEmpty() || age.toInt() < 0 || age.toInt() > 80){
-                    Toast.makeText(context, "Please enter age between 0 to 80", Toast.LENGTH_SHORT).show()
-                } else if (weight.isEmpty() || weight.toInt() < 40 || weight.toInt() > 160){
-                    Toast.makeText(context, "Please enter weight between 40 kg and 160 kg", Toast.LENGTH_SHORT).show()
-                } else if (height.isEmpty() || height.toInt() < 130 || height.toInt() > 230){
-                    Toast.makeText(context, "Please enter height between 130 cm and 230 cm", Toast.LENGTH_SHORT).show()
-                } else{
-                    viewModel.getDailyCalorieFromApi(age, selectedGender, height, weight, activityLevelSelected)
-                    //Toast.makeText(context, dailyCalorie.toString(), Toast.LENGTH_SHORT).show()
-                }
-            }
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(
+                alignment = Alignment.CenterHorizontally,
+                space = 8.dp
+            )
         ){
-            Text(text = "Submit")
+            Button(
+                onClick = {
+                    if (age.isEmpty() || age.toInt() < 0 || age.toInt() > 80){
+                        Toast.makeText(context, "Please enter age between 0 to 80", Toast.LENGTH_SHORT).show()
+                    } else if (weight.isEmpty() || weight.toInt() < 40 || weight.toInt() > 160){
+                        Toast.makeText(context, "Please enter weight between 40 kg and 160 kg", Toast.LENGTH_SHORT).show()
+                    } else if (height.isEmpty() || height.toInt() < 130 || height.toInt() > 230){
+                        Toast.makeText(context, "Please enter height between 130 cm and 230 cm", Toast.LENGTH_SHORT).show()
+                    } else{
+                        viewModel.getDailyCalorieFromApi(age, selectedGender, height, weight, activityLevelSelected)
+                        //Toast.makeText(context, dailyCalorie.toString(), Toast.LENGTH_SHORT).show()
+                    }
+                }
+            ){
+                Text(text = "Calculate")
+            }
+            Button(
+                onClick = {
+                    viewModel.insertDailyCalorieToDatabase(dailyCalorie)
+                }
+            ){
+                Text(text = "Submit")
+            }
+        }
+        /**This can be in the helper file**/
+        LazyColumn(
+            userScrollEnabled = true
+        ){
+            // add a header for lazy column = History
+            stickyHeader {
+                Text("History", modifier = modifier.background(Color.Blue))
+            }
+            items(
+                items = allDailyCalorie,
+                itemContent = {item ->
+                    /**
+                     * TODO:
+                     * showcase all columns of the table
+                     */
+                    Text(text = item.toString())
+                }
+            )
         }
     }
 }

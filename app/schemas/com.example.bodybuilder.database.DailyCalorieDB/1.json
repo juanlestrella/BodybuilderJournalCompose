@@ -1,0 +1,46 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "6dc888d56d00201c27e19ea876ab3aa0",
+    "entities": [
+      {
+        "tableName": "DailyCalorieEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`BMR` INTEGER, `goals` TEXT, `idDailyCalorie` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "BMR",
+            "columnName": "BMR",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "goals",
+            "columnName": "goals",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idDailyCalorie",
+            "columnName": "idDailyCalorie",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "idDailyCalorie"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6dc888d56d00201c27e19ea876ab3aa0')"
+    ]
+  }
+}

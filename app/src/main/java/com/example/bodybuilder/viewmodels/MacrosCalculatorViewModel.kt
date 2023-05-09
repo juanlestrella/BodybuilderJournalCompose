@@ -3,8 +3,8 @@ package com.example.bodybuilder.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.bodybuilder.data.MacrosAmountData.MacrosAmountData
-import com.example.bodybuilder.data.MacrosAmountData.MacrosData
+import com.example.bodybuilder.data.MacrosData.MacrosData
+import com.example.bodybuilder.data.MacrosData.MacrosDetail
 import com.example.bodybuilder.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -20,16 +20,19 @@ class MacrosCalculatorViewModel @Inject constructor(
 ) : ViewModel() {
     private val tag = MacrosCalculatorViewModel::class.simpleName
 
-    private val _macroCalculator = MutableStateFlow(
-        MacrosAmountData(
+    private val _macros = MutableStateFlow(
+        MacrosData(
             0.toFloat(),
-            MacrosData(0.toFloat(),0.toFloat(),0.toFloat()), // balanced
-            MacrosData(0.toFloat(),0.toFloat(),0.toFloat()), // low fat
-            MacrosData(0.toFloat(),0.toFloat(),0.toFloat()), // low carbs
-            MacrosData(0.toFloat(),0.toFloat(),0.toFloat()), // high protein
+            MacrosDetail(0.toFloat(),0.toFloat(),0.toFloat()), // balanced
+            MacrosDetail(0.toFloat(),0.toFloat(),0.toFloat()), // low fat
+            MacrosDetail(0.toFloat(),0.toFloat(),0.toFloat()), // low carbs
+            MacrosDetail(0.toFloat(),0.toFloat(),0.toFloat()), // high protein
         )
     )
-    val macroCalculator : StateFlow<MacrosAmountData> = _macroCalculator.asStateFlow()
+    val macros : StateFlow<MacrosData> = _macros.asStateFlow()
+
+    private val _macrosList: StateFlow<List<MacrosData>> = repository.macrosList
+    val macrosList : StateFlow<List<MacrosData>> = _macrosList
 
     fun getMacrosCalculatorFromApi(
         age: String,
@@ -49,10 +52,21 @@ class MacrosCalculatorViewModel @Inject constructor(
                     activityLevel,
                     goal
                 )
-                _macroCalculator.value = repository.macroCalculator.value
+                _macros.value = repository.macros.value
             } catch (e: Exception) {
                 e.message?.let { Log.e(tag, it) }
             }
+        }
+    }
+
+    fun insertMacrosToDatabase(data: MacrosData){
+        viewModelScope.launch(Dispatchers.IO){
+            repository.insertMacrosToDB(data)
+        }
+    }
+    init{
+        viewModelScope.launch(Dispatchers.IO){
+            repository.getAllMacrosFromDB()
         }
     }
 }

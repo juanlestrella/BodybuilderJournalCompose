@@ -109,6 +109,7 @@ fun BodyFatContent(
                 Text(text = "Submit")
             }
         }
+        /**This can be in the helper file**/
         LazyColumn(
             userScrollEnabled = true
         ){

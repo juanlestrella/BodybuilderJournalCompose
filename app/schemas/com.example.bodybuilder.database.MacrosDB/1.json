@@ -1,0 +1,64 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "8daa9b633c0ff53e6985c9d50daa089c",
+    "entities": [
+      {
+        "tableName": "MacrosEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`calorie` REAL, `balanced` TEXT, `lowFat` TEXT, `lowCarbs` TEXT, `highProtein` TEXT, `idMacros` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "calorie",
+            "columnName": "calorie",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "balanced",
+            "columnName": "balanced",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lowFat",
+            "columnName": "lowFat",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lowCarbs",
+            "columnName": "lowCarbs",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "highProtein",
+            "columnName": "highProtein",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idMacros",
+            "columnName": "idMacros",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "idMacros"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8daa9b633c0ff53e6985c9d50daa089c')"
+    ]
+  }
+}
