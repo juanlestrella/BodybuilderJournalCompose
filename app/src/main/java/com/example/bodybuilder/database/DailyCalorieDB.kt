@@ -6,7 +6,7 @@ import com.example.bodybuilder.models.DailyCalorieEntity
 
 @Dao
 interface DailyCalorieDao{
-
+    @RewriteQueriesToDropUnusedColumns
     @Query("SELECT * FROM DailyCalorieEntity ORDER BY idDailyCalorie")
     fun getAllDailyCalorie(): List<DailyCalorieData>
 

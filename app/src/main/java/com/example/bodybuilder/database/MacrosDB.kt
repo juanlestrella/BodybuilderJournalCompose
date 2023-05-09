@@ -6,6 +6,7 @@ import com.example.bodybuilder.models.MacrosEntity
 
 @Dao
 interface MacrosDao{
+    @RewriteQueriesToDropUnusedColumns
     @Query("SELECT * FROM MacrosEntity ORDER BY idMacros")
     fun getAllMacros(): List<MacrosData>
 

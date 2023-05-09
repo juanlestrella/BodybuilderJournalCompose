@@ -6,6 +6,7 @@ import com.example.bodybuilder.models.BodyFatEntity
 
 @Dao
 interface BodyFatDao {
+    @RewriteQueriesToDropUnusedColumns
     @Query("SELECT * FROM BodyFatEntity ORDER BY idBodyFat DESC")
     fun getAllBodyFat(): List<BodyFatData>
 
