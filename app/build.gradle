@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-parcelize'
     id 'com.google.dagger.hilt.android'
     id 'kotlin-kapt'
+    id 'org.jetbrains.kotlin.plugin.serialization'
 }
 
 android {
@@ -49,7 +50,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.2.0'
+        kotlinCompilerExtensionVersion '1.4.7'
     }
     packagingOptions {
         resources {
@@ -99,6 +100,7 @@ dependencies {
 
     // Gson
     implementation "com.google.code.gson:gson:$gson_version"
+    implementation "com.squareup.retrofit2:converter-gson:$gson_converter"
 
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
@@ -112,6 +114,8 @@ dependencies {
 
     // Navigation
     implementation "androidx.navigation:navigation-compose:$nav_version"
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0'
 
 
 }

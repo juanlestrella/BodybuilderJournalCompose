@@ -6,10 +6,11 @@ import com.example.bodybuilder.data.MacrosData.MacrosDetail
 
 @Entity(tableName = "MacrosEntity")
 data class MacrosEntity(
-    val calorie: Float?,
-    val balanced: MacrosDetail?,
-    val lowFat: MacrosDetail?,
-    val lowCarbs: MacrosDetail?,
-    val highProtein: MacrosDetail?,
-    @PrimaryKey(autoGenerate = true) val idMacros: Int = 0
-)
+    var calorie: Float?,
+    var balanced: MacrosDetail?,
+    var lowFat: MacrosDetail?,
+    var lowCarbs: MacrosDetail?,
+    var highProtein: MacrosDetail?
+){
+    @PrimaryKey(autoGenerate = true) var idMacros: Int = 0
+}

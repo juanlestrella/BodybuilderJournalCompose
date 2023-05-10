@@ -7,7 +7,8 @@ import com.example.bodybuilder.Constants
 import com.example.bodybuilder.database.*
 import com.example.bodybuilder.network.ApiService
 import com.example.bodybuilder.repository.Repository
-import com.squareup.moshi.Moshi
+import com.google.gson.Gson
+//import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
@@ -16,6 +17,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
@@ -29,12 +31,12 @@ object AppModule {
         return app as BaseApplication
     }
 
-    @Singleton
-    @Provides
-    fun provideMoshiBuilder() : Moshi =
-        Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
-            .build()
+//    @Singleton
+//    @Provides
+//    fun provideMoshiBuilder() : Moshi =
+//        Moshi.Builder()
+//            .add(KotlinJsonAdapterFactory())
+//            .build()
 
 
     @Singleton
@@ -46,11 +48,11 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideApi(moshi: Moshi, okHttpClient: OkHttpClient) : ApiService {
+    fun provideApi(okHttpClient: OkHttpClient) : ApiService {
         return Retrofit.Builder()
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(okHttpClient)
             .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ApiService::class.java)
     }

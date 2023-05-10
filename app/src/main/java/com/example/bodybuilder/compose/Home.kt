@@ -51,7 +51,7 @@ import com.example.bodybuilder.ui.theme.Bodybuilder
 fun HomeScreen(
     modifier: Modifier
 ) {
-    HomeBodyContent()
+    HomeBodyContent(modifier = modifier)
 }
 
 /**
