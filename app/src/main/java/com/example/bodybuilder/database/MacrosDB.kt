@@ -1,6 +1,7 @@
 package com.example.bodybuilder.database
 
 import androidx.room.*
+import com.example.bodybuilder.Converters
 import com.example.bodybuilder.data.MacrosData.MacrosData
 import com.example.bodybuilder.models.MacrosEntity
 
@@ -15,6 +16,7 @@ interface MacrosDao{
 }
 
 @Database(entities = [MacrosEntity::class], version = 1)
+@TypeConverters(Converters::class)
 abstract class MacrosDB : RoomDatabase(){
     abstract val macrosDao: MacrosDao
 }

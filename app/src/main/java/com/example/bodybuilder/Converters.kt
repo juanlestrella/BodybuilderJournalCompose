@@ -1,27 +1,32 @@
 package com.example.bodybuilder
 
 import androidx.room.TypeConverter
-import com.example.bodybuilder.data.BmiData.BmiData
+import com.example.bodybuilder.data.DailyCalorieData.DailyCalorieGoalsData
+import com.example.bodybuilder.data.DailyCalorieData.GainWeightData
+import com.example.bodybuilder.data.DailyCalorieData.LossWeightData
+import com.example.bodybuilder.data.MacrosData.MacrosDetail
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import java.lang.reflect.Type
 
 class Converters {
-
     @TypeConverter
-    fun toBmiData(value: String): List<BmiData> {
-        val gson = Gson()
-        if (value == null) {
-            return emptyList()
-        }
-        val listType: Type = object : TypeToken<List<BmiData>>() {}.type
-        return gson.fromJson(value, listType)
+    fun fromMacrosDetail(value : String?) : MacrosDetail? {
+        return value?.let { MacrosDetail(it.toFloat(),it.toFloat(),it.toFloat()) }
     }
 
     @TypeConverter
-    fun fromBmiData(bmiData: List<BmiData>): String {
-        val gson = Gson()
-        return gson.toJson(bmiData)
+    fun toMacrosDetail(macrosDetail: MacrosDetail?) : String? {
+        return macrosDetail?.let { it.toString() }
     }
 
+    @TypeConverter
+    fun fromDailyCalorieGoals(value: String?) : DailyCalorieGoalsData?{
+        val lossWeightData = LossWeightData("", 0)
+        val gainWeightData = GainWeightData("", 0)
+        return value?.let { DailyCalorieGoalsData(0, lossWeightData,lossWeightData,lossWeightData,gainWeightData,gainWeightData,gainWeightData) }
+    }
+
+    @TypeConverter
+    fun toDailyCalorieGoals(dailyCalorieGoalsData: DailyCalorieGoalsData?) : String?{
+        return dailyCalorieGoalsData?.let { it.toString() }
+    }
 }

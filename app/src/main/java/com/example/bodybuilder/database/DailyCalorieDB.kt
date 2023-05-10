@@ -1,6 +1,7 @@
 package com.example.bodybuilder.database
 
 import androidx.room.*
+import com.example.bodybuilder.Converters
 import com.example.bodybuilder.data.DailyCalorieData.DailyCalorieData
 import com.example.bodybuilder.models.DailyCalorieEntity
 
@@ -15,6 +16,7 @@ interface DailyCalorieDao{
 }
 
 @Database(entities = [DailyCalorieEntity::class], version = 1)
+@TypeConverters(Converters::class)
 abstract class DailyCalorieDB : RoomDatabase(){
     abstract val dailyCalorieDao: DailyCalorieDao
 }
