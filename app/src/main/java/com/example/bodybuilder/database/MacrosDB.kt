@@ -8,7 +8,7 @@ import com.example.bodybuilder.models.MacrosEntity
 @Dao
 interface MacrosDao{
     @RewriteQueriesToDropUnusedColumns
-    @Query("SELECT * FROM MacrosEntity ORDER BY idMacros")
+    @Query("SELECT * FROM MacrosEntity ORDER BY idMacros DESC")
     fun getAllMacros(): List<MacrosData>
 
     @Insert (onConflict = OnConflictStrategy.REPLACE)

@@ -6,7 +6,7 @@ import com.example.bodybuilder.data.DailyCalorieData.DailyCalorieGoalsData
 
 @Entity(tableName = "DailyCalorieEntity")
 data class DailyCalorieEntity(
-    val BMR: Int?,
+    val BMR: Float?,
     val goals: DailyCalorieGoalsData?,
     @PrimaryKey(autoGenerate = true) val idDailyCalorie: Int = 0
 )

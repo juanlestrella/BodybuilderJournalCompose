@@ -8,7 +8,7 @@ import com.example.bodybuilder.models.DailyCalorieEntity
 @Dao
 interface DailyCalorieDao{
     @RewriteQueriesToDropUnusedColumns
-    @Query("SELECT * FROM DailyCalorieEntity ORDER BY idDailyCalorie")
+    @Query("SELECT * FROM DailyCalorieEntity ORDER BY idDailyCalorie DESC")
     fun getAllDailyCalorie(): List<DailyCalorieData>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

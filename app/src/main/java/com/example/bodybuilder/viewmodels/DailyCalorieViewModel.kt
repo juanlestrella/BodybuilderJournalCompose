@@ -24,7 +24,7 @@ class DailyCalorieViewModel @Inject constructor(
 
     private val _dailyCalorie = MutableStateFlow(
         DailyCalorieData(
-            0,
+            0.toFloat(),
             DailyCalorieGoalsData(
                 0,
                 LossWeightData("", 0),
@@ -53,7 +53,7 @@ class DailyCalorieViewModel @Inject constructor(
                 repository.getDailyCalorieFromApi(age.toInt(), gender, height.toFloat(), weight.toFloat(), activityLevel)
                 _dailyCalorie.value = repository.dailyCalorie.value
             }catch (e: Exception){
-                e.message?.let { Log.e(tag, it) }
+                e.message?.let { Log.e(tag, "getDailyCalorieFromApi $it") }
             }
         }
     }

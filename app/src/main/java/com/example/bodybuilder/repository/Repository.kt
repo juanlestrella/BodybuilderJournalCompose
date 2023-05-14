@@ -57,7 +57,7 @@ class Repository @Inject constructor(
     private val _dailyCalorie =
         MutableStateFlow(
             DailyCalorieData(
-                0,
+                0.toFloat(),
                 DailyCalorieGoalsData(
                     0,
                     LossWeightData("",0),
