@@ -8,6 +8,7 @@ import com.example.bodybuilder.database.*
 import com.example.bodybuilder.network.ApiService
 import com.example.bodybuilder.repository.Repository
 import com.google.gson.Gson
+import com.squareup.moshi.Moshi
 //import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -31,12 +32,12 @@ object AppModule {
         return app as BaseApplication
     }
 
-//    @Singleton
-//    @Provides
-//    fun provideMoshiBuilder() : Moshi =
-//        Moshi.Builder()
-//            .add(KotlinJsonAdapterFactory())
-//            .build()
+    @Singleton
+    @Provides
+    fun provideMoshiBuilder() : Moshi =
+        Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
 
 
     @Singleton
@@ -48,11 +49,11 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideApi(okHttpClient: OkHttpClient) : ApiService {
+    fun provideApi(moshi: Moshi, okHttpClient: OkHttpClient) : ApiService {
         return Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(ApiService::class.java)
     }

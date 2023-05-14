@@ -101,7 +101,7 @@ class Repository @Inject constructor(
     }
 
     suspend fun getBodyFatFromApi(
-        age: Int,
+        age: Number,
         gender: String,
         weight: Number,
         height: Number,
@@ -124,6 +124,7 @@ class Repository @Inject constructor(
                 )
             if (response.isSuccessful) {
                 _bodyFat.value = response.body()!!.data
+                Log.i("getBodyFatFromApi", response.body().toString())
             } else {
                 response.errorBody()?.string()?.let { Log.e(tag, "$it(Body Fat Error)") }
             }
