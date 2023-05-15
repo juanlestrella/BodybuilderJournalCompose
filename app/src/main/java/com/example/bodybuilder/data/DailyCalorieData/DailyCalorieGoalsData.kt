@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class DailyCalorieGoalsData(
     @Json(name = "maintain weight")
-    val maintain: Int?,
+    val maintain: Float?,
     @Json(name = "Mild weight loss")
     val mildWeightLoss: LossWeightData?,
     @Json(name = "Weight loss")

@@ -28,9 +28,9 @@ class Converters {
 
     @TypeConverter
     fun fromDailyCalorieGoals(value: String?) : DailyCalorieGoalsData {
-        val lossWeightData = LossWeightData("", 0)
-        val gainWeightData = GainWeightData("", 0)
-        val nullValue = DailyCalorieGoalsData(0, lossWeightData,lossWeightData,lossWeightData,gainWeightData,gainWeightData,gainWeightData)
+        val lossWeightData = LossWeightData("", 0.toFloat())
+        val gainWeightData = GainWeightData("", 0.toFloat())
+        val nullValue = DailyCalorieGoalsData(0.toFloat(), lossWeightData,lossWeightData,lossWeightData,gainWeightData,gainWeightData,gainWeightData)
         return gson.fromJson(value, DailyCalorieGoalsData::class.java) ?: nullValue
     }
 
@@ -41,7 +41,7 @@ class Converters {
 
     @TypeConverter
     fun fromGrainWeight(value : String?) : GainWeightData {
-        val nullValue = GainWeightData("", 0)
+        val nullValue = GainWeightData("", 0.toFloat())
         return gson.fromJson(value, GainWeightData::class.java) ?: nullValue
     }
 
@@ -52,7 +52,7 @@ class Converters {
 
     @TypeConverter
     fun fromLoseWeight(value : String?) : LossWeightData {
-        val nullValue = LossWeightData("", 0)
+        val nullValue = LossWeightData("", 0.toFloat())
         return gson.fromJson(value, LossWeightData::class.java) ?: nullValue
     }
 }

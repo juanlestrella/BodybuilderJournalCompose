@@ -8,5 +8,5 @@ data class LossWeightData(
     @Json(name = "loss weight")
     var lossWeight: String?,
     @Json(name = "calory")
-    var calory: Int?
+    var calory: Float?
 )

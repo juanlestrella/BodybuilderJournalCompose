@@ -26,13 +26,13 @@ class DailyCalorieViewModel @Inject constructor(
         DailyCalorieData(
             0.toFloat(),
             DailyCalorieGoalsData(
-                0,
-                LossWeightData("", 0),
-                LossWeightData("", 0),
-                LossWeightData("", 0),
-                GainWeightData("",0),
-                GainWeightData("",0),
-                GainWeightData("",0)
+                0.toFloat(),
+                LossWeightData("", 0.toFloat()),
+                LossWeightData("", 0.toFloat()),
+                LossWeightData("", 0.toFloat()),
+                GainWeightData("",0.toFloat()),
+                GainWeightData("",0.toFloat()),
+                GainWeightData("",0.toFloat())
             )
         )
     )
