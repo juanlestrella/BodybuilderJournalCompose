@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
 
                     content = { paddingValues ->
                         AppNavHost(
-                            modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
+                            modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding().minus(28.dp)),//.minus(28.dp)
                             navController = navController
                         )
                     },

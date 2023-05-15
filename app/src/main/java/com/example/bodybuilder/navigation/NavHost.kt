@@ -19,7 +19,7 @@ fun AppNavHost(
     startDestination: String = "home",
 ){
     NavHost(
-        modifier = modifier.padding(bottom = 0.dp),
+        modifier = modifier,
         navController = navController,
         startDestination = startDestination
     ){
