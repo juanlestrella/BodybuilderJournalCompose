@@ -18,6 +18,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 fun AppBottomNavigation(navController: NavController) {
     val items = listOf(
         Screen.Home,
+        Screen.Add,
         Screen.Diary
     )
     BottomNavigation() {

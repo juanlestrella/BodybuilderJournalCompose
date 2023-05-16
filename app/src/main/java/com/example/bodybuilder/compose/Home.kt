@@ -35,16 +35,17 @@ import com.example.bodybuilder.ui.theme.Bodybuilder
 /**
  * TODO:
  * 0) Apply Card Effects
- * 0) Make each Card clickable
- *      0) -> make image zoom out once clicked
+ * 0) Make each Folder clickable
+ *      0) navigate to another screen
  * 0) Implement Scaffold
- *      3.a) switch bottomBar to BottomNavigation
+ *      0) switch bottomBar to BottomNavigation
  *      https://developer.android.com/reference/kotlin/androidx/compose/material/package-summary#bottomnavigation
- * 4) Implement network
- * 5) Implement entities and database
- * 6) Implement ViewModels
- * 7) Implement repositories
- * 8) Implement navigation
+ * 0) Implement network
+ * 0) Implement entities and database
+ * 0) Implement ViewModels
+ * 0) Implement repositories
+ * 0) Implement navigation
+ * 1) Implement an Add Screen and add it to BottomNavigation
  */
 
 @Composable
@@ -59,13 +60,13 @@ fun HomeScreen(
  */
 @Composable
 fun HomeBodyContent(
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
 ){
     LazyColumn(
         modifier = modifier,
         userScrollEnabled = true
     ){
-        items(10){ // Use Room table to determine the size of the LazyColumn
+        items(3){ // Use Room table to determine the size of the LazyColumn
             Spacer(modifier = modifier.height(8.dp)) // this helps avoid recomposition of the child composable function
             HomeContentFolder()
         }
@@ -114,22 +115,20 @@ fun ContentCard(
     @DrawableRes image: Int = R.drawable.baseline_smart_toy_24,
     description: String = "temp description",
     bodyPart: String = "Body part",
-    context: Context = LocalContext.current
+//    context: Context = LocalContext.current
 ){
-    val isClicked = remember { mutableStateOf(false) }
+//    val isClicked = remember { mutableStateOf(false) }
     val imageModifier = modifier
         .size(150.dp)
         .background(Color.Gray)
         .fillMaxWidth()
-        .clickable(
-            enabled = true,
-            onClick = { // use this to show larger image of clicked image
-                Toast
-                    .makeText(context, "Clicked Image", Toast.LENGTH_SHORT)
-                    .show()
-                isClicked.value = !isClicked.value
-            },
-        )
+//        .clickable(
+//            enabled = true,
+//            onClick = { // use this to show larger image of clicked image
+//                Toast.makeText(context, "Clicked Image", Toast.LENGTH_SHORT).show()
+//                isClicked.value = !isClicked.value
+//            },
+//        )
     Surface{
         Column(
             modifier = modifier
@@ -149,9 +148,9 @@ fun ContentCard(
             }
             Text(text = bodyPart)
         }
-        if (isClicked.value){
-            BoxImage(modifier, image)
-        }
+//        if (isClicked.value){
+//            BoxImage(modifier, image)
+//        }
     }
 }
 
@@ -159,42 +158,42 @@ fun ContentCard(
  * This can be in another file and use navigation
  * Used to enlarge the clicked image
  */
-@Composable
-fun BoxImage(
-    modifier: Modifier = Modifier,
-    @DrawableRes image: Int = R.drawable.baseline_smart_toy_24,
-    configuration: Configuration = LocalConfiguration.current
-){
-    val scale = remember { mutableStateOf(1f) }
-    val rotationState = remember { mutableStateOf(1f) }
-    Box(
-        modifier = modifier
-            .clip(RectangleShape)
-            .background(color = MaterialTheme.colors.background)
-            .border(1.dp, if (isSystemInDarkTheme()) Color.White else Color.Black)
-            .size(height = configuration.screenHeightDp.dp, width = configuration.screenWidthDp.dp)
-            .pointerInput(Unit) {
-                detectTransformGestures { _, _, zoom, rotation ->
-                    scale.value *= zoom
-                    rotationState.value += rotation
-                }
-            }
-    ){
-        Image(
-            modifier = modifier
-                .align(Alignment.Center)
-                .fillMaxSize()
-                .graphicsLayer(
-                    scaleX = maxOf(.5f, minOf(3f, scale.value)),
-                    scaleY = maxOf(.5f, minOf(3f, scale.value)),
-                    rotationZ = rotationState.value
-                ),
-            contentDescription = "Zoom Image",
-            contentScale = ContentScale.Fit,
-            painter = painterResource(id = image)
-        )
-    }
-}
+//@Composable
+//fun BoxImage(
+//    modifier: Modifier = Modifier,
+//    @DrawableRes image: Int = R.drawable.baseline_smart_toy_24,
+//    configuration: Configuration = LocalConfiguration.current
+//){
+//    val scale = remember { mutableStateOf(1f) }
+//    val rotationState = remember { mutableStateOf(1f) }
+//    Box(
+//        modifier = modifier
+//            .clip(RectangleShape)
+//            .background(color = MaterialTheme.colors.background)
+//            .border(1.dp, if (isSystemInDarkTheme()) Color.White else Color.Black)
+//            .size(height = configuration.screenHeightDp.dp, width = configuration.screenWidthDp.dp)
+//            .pointerInput(Unit) {
+//                detectTransformGestures { _, _, zoom, rotation ->
+//                    scale.value *= zoom
+//                    rotationState.value += rotation
+//                }
+//            }
+//    ){
+//        Image(
+//            modifier = modifier
+//                .align(Alignment.Center)
+//                .fillMaxSize()
+//                .graphicsLayer(
+//                    scaleX = maxOf(.5f, minOf(3f, scale.value)),
+//                    scaleY = maxOf(.5f, minOf(3f, scale.value)),
+//                    rotationZ = rotationState.value
+//                ),
+//            contentDescription = "Zoom Image",
+//            contentScale = ContentScale.Fit,
+//            painter = painterResource(id = image)
+//        )
+//    }
+//}
 /** ----------PREVIEWS---------- **/
 @Preview(showBackground = true)
 @Composable

@@ -28,6 +28,9 @@ fun AppNavHost(
                 modifier = modifier
             )
         }
+        composable("add"){
+            AddScreen(modifier = modifier)
+        }
         composable("diary") {
             DiaryScreen(
                 modifier = modifier,
