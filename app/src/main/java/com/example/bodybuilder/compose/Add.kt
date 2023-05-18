@@ -6,6 +6,8 @@ import android.util.Log
 import android.widget.DatePicker
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Button
@@ -19,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -52,7 +55,7 @@ fun AddBodyContent(
     val datePicker = DatePickerDialog(
         context,
         { _: DatePicker, selectedYear: Int, selectedMonth: Int, selectedDayOfMonth: Int ->
-            date = "$selectedDayOfMonth/${selectedMonth + 1}/$selectedYear"
+            date = "${selectedMonth + 1}/$selectedDayOfMonth/$selectedYear"
         }, year, month, day
     )
 
@@ -84,20 +87,23 @@ fun AddBodyContent(
         LazyColumn {
             items(selectedImages.size) { index ->
                 Card(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxSize(),
+                    //border = BorderStroke(1.dp, if(isSystemInDarkTheme()) Color.White else Color.Black)
                 ){
                     Column {
                         AsyncImage(
                             model = selectedImages[index],
                             contentDescription = null,
-                            contentScale = ContentScale.Crop
+                            contentScale = ContentScale.FillWidth,
+                            modifier = Modifier.fillMaxSize()
                         )
                         TextField(
                             value = imagesCaption[index],
                             onValueChange = {
                                 imagesCaption.set(index = index, element = it)
                             },
-                            modifier = Modifier.fillMaxSize()
+                            label = {Text("Add a short description...")},
+                            modifier = Modifier.fillMaxSize().padding(bottom = 8.dp)
                         )
                     }
                 }
