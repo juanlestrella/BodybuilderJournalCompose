@@ -28,8 +28,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bodybuilder.R
 import com.example.bodybuilder.ui.theme.Bodybuilder
+import com.example.bodybuilder.viewmodels.HomeViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 
 
 /**
@@ -62,11 +65,16 @@ fun HomeScreen(
 fun HomeBodyContent(
     modifier: Modifier,
 ){
+    val viewModel: HomeViewModel = hiltViewModel()
+    /**
+     * TODO: Get and show all images
+     * viewModel.allImages should be a nested list of images
+     **/
     LazyColumn(
         modifier = modifier,
         userScrollEnabled = true
     ){
-        items(3){ // Use Room table to determine the size of the LazyColumn
+        items(3){ // Use Room table to determine the size of the LazyColumn ---->> Outter list of viewModel.allImages
             Spacer(modifier = modifier.height(8.dp)) // this helps avoid recomposition of the child composable function
             HomeContentFolder()
         }
@@ -98,7 +106,7 @@ fun HomeContentFolder(
             LazyRow(
                 userScrollEnabled = true
             ) {
-                items(10) {// Size is determine by how many pictures the user added
+                items(10) {// Size is determine by how many pictures the user added ----> Inner list of viewModel.allImages
                     ContentCard()
                 }
             }

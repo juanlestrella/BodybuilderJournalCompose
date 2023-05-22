@@ -10,8 +10,8 @@ import androidx.room.PrimaryKey
 data class BmiEntity(
     val bmi: Float?,
     val health: String?,
-    val healthy_bmi_range: String?,
+    val healthy_bmi_range: String?, // need to change to camel case
     @PrimaryKey(autoGenerate = true)
     @NonNull
-    val id_bmi: Int = 0,
+    val id_bmi: Int = 0,// need to change to camel case
 )

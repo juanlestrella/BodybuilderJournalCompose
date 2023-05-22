@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "ImagesEntity")
 data class ImagesEntity(
-    val imagesString: String,
+    val imagesString: List<String>,
     @PrimaryKey(autoGenerate = true)
     @NonNull
-    val id_images: Int = 0
+    val idImages: Int = 0
 )

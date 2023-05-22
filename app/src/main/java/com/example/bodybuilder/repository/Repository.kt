@@ -246,8 +246,12 @@ class Repository @Inject constructor(
 
     /***ADD***/
     suspend fun insertImagesToDB(images: List<String>){
-        images.forEach { image ->
-            imagesDao.insertImages(ImagesEntity(image))
-        }
+        imagesDao.insertImages(ImagesEntity(images))
+    }
+
+    /***HOME***/
+    suspend fun getAllImagesFromDB() :List<String>{
+        //_allImages.value = imagesDao.getAllImages()
+        return imagesDao.getAllImages()
     }
 }
