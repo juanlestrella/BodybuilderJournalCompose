@@ -25,7 +25,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import com.example.bodybuilder.viewmodels.AddViewModel
 import java.util.Calendar
 
 @Composable
@@ -39,11 +41,7 @@ fun AddScreen(
 fun AddBodyContent(
     modifier: Modifier,
 ) {
-    /**
-     * 0) Date
-     * Images
-     * Body part's name
-     */
+    val viewModel: AddViewModel = hiltViewModel()
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
     var date by rememberSaveable { mutableStateOf("") }
@@ -74,14 +72,22 @@ fun AddBodyContent(
             Button( onClick = { datePicker.show() }){
                 Text(text = if(date.isNotEmpty()) "$date" else "Select Date")
             }
-            Button(
-                onClick = {
-                    launcher.launch("image/*")
-
-                }
+            Button( onClick = { launcher.launch("image/*") }
             ){
                 Text(text = "Pick Images")
                 (1..selectedImages.size).forEach { _ -> imagesCaption.add("") }
+            }
+            Button(
+                onClick = {
+                    /**
+                     * TODO: Navigate back to Home after inserting images to DB
+                     */
+                    viewModel.insertImagesToDatabase(selectedImages)
+                    Log.i("IMAGES", "Successful insert to DB")
+                },
+                enabled = selectedImages.isNotEmpty()
+            ){
+                Text(text = "Submit")
             }
         }
         LazyColumn {
@@ -103,8 +109,11 @@ fun AddBodyContent(
                                 imagesCaption.set(index = index, element = it)
                             },
                             label = {Text("Add a short description...")},
-                            modifier = Modifier.fillMaxSize().padding(bottom = 8.dp)
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(bottom = 8.dp)
                         )
+                        //Log.i("IMAGES", selectedImages[index].toString())
                     }
                 }
             }

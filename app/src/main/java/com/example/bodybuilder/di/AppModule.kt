@@ -7,9 +7,7 @@ import com.example.bodybuilder.Constants
 import com.example.bodybuilder.database.*
 import com.example.bodybuilder.network.ApiService
 import com.example.bodybuilder.repository.Repository
-import com.google.gson.Gson
 import com.squareup.moshi.Moshi
-//import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
@@ -18,7 +16,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
@@ -113,14 +110,28 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun provideImagesDB(@ApplicationContext appContext: Context) =
+        Room.databaseBuilder(
+            appContext,
+            ImagesDB::class.java,
+            "images_db",
+        ).build()
+
+    @Singleton
+    @Provides
+    fun provideImagesDao(imagesDB: ImagesDB) = imagesDB.imagesDao
+
+    @Singleton
+    @Provides
     fun provideRepository(
         api : ApiService,
         bmiDao: BmiDao,
         bodyFatDao: BodyFatDao,
         dailyCalorieDao: DailyCalorieDao,
-        macrosDao: MacrosDao
+        macrosDao: MacrosDao,
+        imagesDao: ImagesDao
     ) : Repository {
-        return Repository(api, bmiDao, bodyFatDao, dailyCalorieDao, macrosDao)
+        return Repository(api, bmiDao, bodyFatDao, dailyCalorieDao, macrosDao, imagesDao)
     }
 
 }

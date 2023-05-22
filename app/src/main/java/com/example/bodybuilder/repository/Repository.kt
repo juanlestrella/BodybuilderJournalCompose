@@ -1,8 +1,8 @@
 package com.example.bodybuilder.repository
 
+import android.net.Uri
 import android.util.Log
 import com.example.bodybuilder.Constants
-import com.example.bodybuilder.database.BmiDao
 import com.example.bodybuilder.data.BmiData.BmiData
 import com.example.bodybuilder.data.BodyFatData.BodyFatData
 import com.example.bodybuilder.data.DailyCalorieData.DailyCalorieData
@@ -11,13 +11,8 @@ import com.example.bodybuilder.data.DailyCalorieData.GainWeightData
 import com.example.bodybuilder.data.DailyCalorieData.LossWeightData
 import com.example.bodybuilder.data.MacrosData.MacrosData
 import com.example.bodybuilder.data.MacrosData.MacrosDetail
-import com.example.bodybuilder.database.BodyFatDao
-import com.example.bodybuilder.database.DailyCalorieDao
-import com.example.bodybuilder.database.MacrosDao
-import com.example.bodybuilder.models.BmiEntity
-import com.example.bodybuilder.models.BodyFatEntity
-import com.example.bodybuilder.models.DailyCalorieEntity
-import com.example.bodybuilder.models.MacrosEntity
+import com.example.bodybuilder.database.*
+import com.example.bodybuilder.models.*
 import com.example.bodybuilder.response.BmiResponse
 import com.example.bodybuilder.network.ApiService
 import com.example.bodybuilder.response.BodyFatResponse
@@ -36,7 +31,8 @@ class Repository @Inject constructor(
     private val bmiDao: BmiDao,
     private val bodyFatDao: BodyFatDao,
     private val dailyCalorieDao: DailyCalorieDao,
-    private val macrosDao: MacrosDao
+    private val macrosDao: MacrosDao,
+    private val imagesDao: ImagesDao
 ) {
 
     private val tag = Repository::class.simpleName
@@ -246,5 +242,12 @@ class Repository @Inject constructor(
     }
     suspend fun getAllMacrosFromDB() = withContext(Dispatchers.IO){
         _macrosList.value = macrosDao.getAllMacros()
+    }
+
+    /***ADD***/
+    suspend fun insertImagesToDB(images: List<String>){
+        images.forEach { image ->
+            imagesDao.insertImages(ImagesEntity(image))
+        }
     }
 }

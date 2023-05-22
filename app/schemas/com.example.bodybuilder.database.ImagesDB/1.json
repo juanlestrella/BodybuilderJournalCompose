@@ -1,0 +1,40 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "13dae9673f5b49ba7f5cd107fc89365e",
+    "entities": [
+      {
+        "tableName": "ImagesEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`imagesString` TEXT NOT NULL, `id_images` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "imagesString",
+            "columnName": "imagesString",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id_images",
+            "columnName": "id_images",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id_images"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '13dae9673f5b49ba7f5cd107fc89365e')"
+    ]
+  }
+}
