@@ -24,11 +24,15 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.example.bodybuilder.R
 import com.example.bodybuilder.models.ImagesEntity
 import com.example.bodybuilder.ui.theme.Bodybuilder
 import com.example.bodybuilder.viewmodels.HomeViewModel
+import java.io.File
 
 
 /**
@@ -68,16 +72,15 @@ fun HomeBodyContent(
      **/
     viewModel.getAllImagesFromDatabase()
     val allImages = viewModel.allImages.collectAsStateWithLifecycle()
-    val imageSize = allImages.value.size
-    //Log.i("IMAGES HOME", allImages.toString())
+    Log.i("IMAGES HOME", allImages.toString())
 
     LazyColumn(
         modifier = modifier,
         userScrollEnabled = true
     ){
-        items(allImages.value.size){ index -> // Use Room table to determine the size of the LazyColumn ---->> Outter list of viewModel.allImages
+        items(allImages.value.size){ index ->
             Spacer(modifier = modifier.height(8.dp)) // this helps avoid recomposition of the child composable function
-            HomeContentFolder(images = allImages.value[index], viewModel = viewModel)
+            HomeContentFolder(images = allImages.value[index])//, viewModel = viewModel)
         }
     }
 }
@@ -91,7 +94,7 @@ fun HomeContentFolder(
     location: String = "Date",
     context: Context = LocalContext.current,
     images: ImagesEntity,
-    viewModel: HomeViewModel = hiltViewModel()
+    //viewModel: HomeViewModel = hiltViewModel()
 ){
 
     Card(
@@ -110,7 +113,8 @@ fun HomeContentFolder(
             LazyRow(
                 userScrollEnabled = true
             ) {
-                items(images.imagesString.size) { index -> // Size is determine by how many pictures the user added ----> Inner list of viewModel.allImages
+                items(images.imagesString.size) { index ->
+                    //Log.i("IMAGES ${images.imagesString.size}", images.imagesString[index])
                     ContentCard(image = images.imagesString[index])
                 }
             }
@@ -124,11 +128,11 @@ fun HomeContentFolder(
 @Composable
 fun ContentCard(
     modifier: Modifier = Modifier,
-    @DrawableRes imageHolder: Int = R.drawable.baseline_smart_toy_24,
+    //@DrawableRes imageHolder: Int = R.drawable.baseline_smart_toy_24,
     description: String = "temp description",
     bodyPart: String = "Body part",
-    image: String
-//    context: Context = LocalContext.current
+    image: String,
+    context: Context = LocalContext.current
 ){
 //    val isClicked = remember { mutableStateOf(false) }
     val imageModifier = modifier
@@ -152,13 +156,19 @@ fun ContentCard(
                 shape = CircleShape,
                 elevation = 20.dp
             ){
+                //val cacheFile = File(context.cacheDir, image)
                 Image(
                     // this is causing render problem in Preview but can just refresh and it works
-                    painter = rememberAsyncImagePainter(model = Uri.parse(image)), //painterResource(id = Uri.parse(image)),
+                    painter = rememberAsyncImagePainter(Uri.parse(image)), // this is causing problem because ones the app is restart the image disappears
                     contentDescription = description,
-                    contentScale = ContentScale.Fit,
+                    contentScale = ContentScale.Crop,
                     modifier = imageModifier,
                 )
+//                AsyncImage(
+//                    model = Uri.parse(image),
+//                    contentDescription = null,
+//                    contentScale = ContentScale.Crop,
+//                )
             }
             Text(text = bodyPart)
         }

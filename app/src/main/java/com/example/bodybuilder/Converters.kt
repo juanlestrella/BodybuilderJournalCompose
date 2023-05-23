@@ -1,5 +1,7 @@
 package com.example.bodybuilder
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.room.TypeConverter
 import com.example.bodybuilder.data.DailyCalorieData.DailyCalorieGoalsData
 import com.example.bodybuilder.data.DailyCalorieData.GainWeightData
@@ -10,6 +12,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
+import java.io.ByteArrayOutputStream
 
 class Converters {
     val gson = Gson()
@@ -39,10 +42,16 @@ class Converters {
     }
 
     @TypeConverter
-    fun fromNestedList(value: List<List<String>>) : String = Json.encodeToString(value)
+    fun fromBitmap(bitmap: Bitmap): ByteArray {
+        val outputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+        return outputStream.toByteArray()
+    }
 
     @TypeConverter
-    fun toNestedList(value: String) : List<List<String>> = Json.decodeFromString(value) ?: listOf(listOf())
+    fun toBitmap(byteArray: ByteArray): Bitmap {
+        return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+    }
 
     @TypeConverter
     fun fromList(value: List<String>) : String = Json.encodeToString(value)
