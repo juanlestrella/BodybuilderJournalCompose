@@ -2,6 +2,7 @@ package com.example.bodybuilder.repository
 
 import android.net.Uri
 import android.util.Log
+import androidx.lifecycle.LiveData
 import com.example.bodybuilder.Constants
 import com.example.bodybuilder.data.BmiData.BmiData
 import com.example.bodybuilder.data.BodyFatData.BodyFatData
@@ -250,7 +251,7 @@ class Repository @Inject constructor(
     }
 
     /***HOME***/
-    suspend fun getAllImagesFromDB() :List<String>{
+    suspend fun getAllImagesFromDB() : List<ImagesEntity> {
         //_allImages.value = imagesDao.getAllImages()
         return imagesDao.getAllImages()
     }

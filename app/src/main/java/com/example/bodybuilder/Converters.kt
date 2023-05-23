@@ -6,6 +6,10 @@ import com.example.bodybuilder.data.DailyCalorieData.GainWeightData
 import com.example.bodybuilder.data.DailyCalorieData.LossWeightData
 import com.example.bodybuilder.data.MacrosData.MacrosDetail
 import com.google.gson.Gson
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
 
 class Converters {
     val gson = Gson()
@@ -33,6 +37,23 @@ class Converters {
         val nullValue = DailyCalorieGoalsData(0.toFloat(), lossWeightData,lossWeightData,lossWeightData,gainWeightData,gainWeightData,gainWeightData)
         return gson.fromJson(value, DailyCalorieGoalsData::class.java) ?: nullValue
     }
+
+    @TypeConverter
+    fun fromNestedList(value: List<List<String>>) : String = Json.encodeToString(value)
+
+    @TypeConverter
+    fun toNestedList(value: String) : List<List<String>> = Json.decodeFromString(value) ?: listOf(listOf())
+
+    @TypeConverter
+    fun fromList(value: List<String>) : String = Json.encodeToString(value)
+
+    @TypeConverter
+    fun toList(value: String) : List<String> =
+        try{
+            Json.decodeFromString(value) ?: listOf()
+        } catch(e: Exception){
+            listOf<String>()
+        }
 
     @TypeConverter
     fun toGainWeight(gainWeightData: GainWeightData?) : String {
