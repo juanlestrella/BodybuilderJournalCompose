@@ -115,8 +115,14 @@ dependencies {
     // Navigation
     implementation "androidx.navigation:navigation-compose:$nav_version"
 
+    // Serialization
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0'
 
+    // Camera X
+    implementation "androidx.camera:camera-core:$camerax_version"
+    implementation "androidx.camera:camera-camera2:$camerax_version"
+    implementation "androidx.camera:camera-lifecycle:$camerax_version"
+    implementation "androidx.camera:camera-view:$camerax_version"
 
 }
     // Allow references to generated code

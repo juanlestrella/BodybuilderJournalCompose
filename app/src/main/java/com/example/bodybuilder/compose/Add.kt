@@ -86,6 +86,7 @@ fun AddBodyContent(
                 Text(text = "Submit")
             }
         }
+
         LazyColumn {
             items(selectedImages.size) { index ->
                 Card(
@@ -116,5 +117,4 @@ fun AddBodyContent(
         }
     }
 }
-
 
