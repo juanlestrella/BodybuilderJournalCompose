@@ -6,8 +6,6 @@ import android.util.Log
 import android.widget.DatePicker
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Button
@@ -19,9 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.runtime.*
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -70,7 +66,7 @@ fun AddBodyContent(
     ) {
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)){
             Button( onClick = { datePicker.show() }){
-                Text(text = if(date.isNotEmpty()) "$date" else "Select Date")
+                Text(text = date.ifEmpty { "Select Date" })
             }
             Button( onClick = { launcher.launch("image/*") }
             ){
@@ -82,7 +78,7 @@ fun AddBodyContent(
                     /**
                      * TODO: Navigate back to Home after inserting images to DB
                      */
-                    viewModel.insertImagesToDatabase(selectedImages)
+                    viewModel.insertImagesToDatabase(date, selectedImages)
                     Log.i("IMAGES", "Successful insert to DB")
                 },
                 enabled = selectedImages.isNotEmpty()

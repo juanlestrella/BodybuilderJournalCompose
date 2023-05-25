@@ -1,8 +1,7 @@
 package com.example.bodybuilder.repository
 
-import android.net.Uri
+import android.graphics.Bitmap
 import android.util.Log
-import androidx.lifecycle.LiveData
 import com.example.bodybuilder.Constants
 import com.example.bodybuilder.data.BmiData.BmiData
 import com.example.bodybuilder.data.BodyFatData.BodyFatData
@@ -25,6 +24,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
 import retrofit2.Response
+import java.util.*
 import javax.inject.Inject
 
 class Repository @Inject constructor(
@@ -246,8 +246,8 @@ class Repository @Inject constructor(
     }
 
     /***ADD***/
-    suspend fun insertImagesToDB(images: List<String>){
-        imagesDao.insertImages(ImagesEntity(images))
+    suspend fun insertImagesToDB(date: String, images: List<String>){
+        imagesDao.insertImages(ImagesEntity(date, images))
     }
 
     /***HOME***/

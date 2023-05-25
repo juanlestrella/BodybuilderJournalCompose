@@ -24,13 +24,11 @@ class HomeViewModel @Inject constructor(
     fun getAllImagesFromDatabase(){
         viewModelScope.launch(Dispatchers.IO){
             _allImages.value = repository.getAllImagesFromDB()
+            Log.i("IMAGES HOME", allImages.value.toString())
         }
     }
 
     init {
-        viewModelScope.launch(Dispatchers.IO){
-            _allImages.value = repository.getAllImagesFromDB()
-            Log.i("IMAGES HOME", allImages.value.toString())
-        }
+        getAllImagesFromDatabase()
     }
 }

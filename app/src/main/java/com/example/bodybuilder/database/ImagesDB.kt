@@ -1,10 +1,8 @@
 package com.example.bodybuilder.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.bodybuilder.Converters
 import com.example.bodybuilder.models.ImagesEntity
-import retrofit2.http.GET
 
 @Dao
 interface ImagesDao {

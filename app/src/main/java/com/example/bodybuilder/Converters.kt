@@ -42,18 +42,6 @@ class Converters {
     }
 
     @TypeConverter
-    fun fromBitmap(bitmap: Bitmap): ByteArray {
-        val outputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-        return outputStream.toByteArray()
-    }
-
-    @TypeConverter
-    fun toBitmap(byteArray: ByteArray): Bitmap {
-        return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
-    }
-
-    @TypeConverter
     fun fromList(value: List<String>) : String = Json.encodeToString(value)
 
     @TypeConverter
@@ -63,26 +51,33 @@ class Converters {
         } catch(e: Exception){
             listOf<String>()
         }
-
-    @TypeConverter
-    fun toGainWeight(gainWeightData: GainWeightData?) : String {
-        return gson.toJson(gainWeightData, DailyCalorieGoalsData::class.java) ?: ""
-    }
-
-    @TypeConverter
-    fun fromGrainWeight(value : String?) : GainWeightData {
-        val nullValue = GainWeightData("", 0.toFloat())
-        return gson.fromJson(value, GainWeightData::class.java) ?: nullValue
-    }
-
-    @TypeConverter
-    fun toLoseWeight(loseWeightData: LossWeightData?) : String {
-        return gson.toJson(loseWeightData, DailyCalorieGoalsData::class.java) ?: ""
-    }
-
-    @TypeConverter
-    fun fromLoseWeight(value : String?) : LossWeightData {
-        val nullValue = LossWeightData("", 0.toFloat())
-        return gson.fromJson(value, LossWeightData::class.java) ?: nullValue
-    }
 }
+
+//@TypeConverter
+//fun fromBitmap(listOfBitmap: List<Bitmap>?): List<ByteArray>? {
+//    return if (listOfBitmap == null){
+//        listOf()
+//    }else{
+//        val lstByteArray = mutableListOf<ByteArray>()
+//        listOfBitmap?.forEach { bitmap ->
+//            val outputStream = ByteArrayOutputStream()
+//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+//            lstByteArray.add(outputStream.toByteArray())
+//        }
+//        lstByteArray
+//    }
+//
+//}
+//
+//@TypeConverter
+//fun toBitmap(byteArray: List<ByteArray>?): List<Bitmap>? {
+//    return if(byteArray == null){
+//        listOf()
+//    }else {
+//        val lstBitmap = mutableListOf<Bitmap>()
+//        byteArray?.forEach {  byteArray ->
+//            lstBitmap.add(BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size))
+//        }
+//        lstBitmap
+//    }
+//}

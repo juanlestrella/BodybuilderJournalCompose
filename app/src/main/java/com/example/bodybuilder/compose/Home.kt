@@ -1,6 +1,7 @@
 package com.example.bodybuilder.compose
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
@@ -17,22 +18,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.compose.AsyncImage
-import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
-import com.example.bodybuilder.R
 import com.example.bodybuilder.models.ImagesEntity
 import com.example.bodybuilder.ui.theme.Bodybuilder
 import com.example.bodybuilder.viewmodels.HomeViewModel
-import java.io.File
 
 
 /**
@@ -67,9 +62,6 @@ fun HomeBodyContent(
     modifier: Modifier,
 ){
     val viewModel: HomeViewModel = hiltViewModel()
-    /**
-     * TODO: add a folder holder
-     **/
     viewModel.getAllImagesFromDatabase()
     val allImages = viewModel.allImages.collectAsStateWithLifecycle()
     Log.i("IMAGES HOME", allImages.toString())
@@ -91,10 +83,8 @@ fun HomeBodyContent(
 @Composable
 fun HomeContentFolder(
     modifier: Modifier = Modifier,
-    location: String = "Date",
     context: Context = LocalContext.current,
     images: ImagesEntity,
-    //viewModel: HomeViewModel = hiltViewModel()
 ){
 
     Card(
@@ -109,13 +99,13 @@ fun HomeContentFolder(
             )
     ) {
         Column {
-            Text(text = location, modifier = modifier.padding(4.dp), fontSize = 28.sp)
+            Text(text = images.Date.ifEmpty { "Date" }, modifier = modifier.padding(4.dp), fontSize = 28.sp)
             LazyRow(
                 userScrollEnabled = true
             ) {
-                items(images.imagesString.size) { index ->
+                items(images.listImages.size) { index ->
                     //Log.i("IMAGES ${images.imagesString.size}", images.imagesString[index])
-                    ContentCard(image = images.imagesString[index])
+                    ContentCard(image = images.listImages[index])
                 }
             }
         }
@@ -134,18 +124,10 @@ fun ContentCard(
     image: String,
     context: Context = LocalContext.current
 ){
-//    val isClicked = remember { mutableStateOf(false) }
     val imageModifier = modifier
         .size(150.dp)
         .background(Color.Gray)
         .fillMaxWidth()
-//        .clickable(
-//            enabled = true,
-//            onClick = { // use this to show larger image of clicked image
-//                Toast.makeText(context, "Clicked Image", Toast.LENGTH_SHORT).show()
-//                isClicked.value = !isClicked.value
-//            },
-//        )
     Surface{
         Column(
             modifier = modifier
@@ -156,7 +138,6 @@ fun ContentCard(
                 shape = CircleShape,
                 elevation = 20.dp
             ){
-                //val cacheFile = File(context.cacheDir, image)
                 Image(
                     // this is causing render problem in Preview but can just refresh and it works
                     painter = rememberAsyncImagePainter(Uri.parse(image)), // this is causing problem because ones the app is restart the image disappears
@@ -172,52 +153,9 @@ fun ContentCard(
             }
             Text(text = bodyPart)
         }
-//        if (isClicked.value){
-//            BoxImage(modifier, image)
-//        }
     }
 }
 
-/**
- * This can be in another file and use navigation
- * Used to enlarge the clicked image
- */
-//@Composable
-//fun BoxImage(
-//    modifier: Modifier = Modifier,
-//    @DrawableRes image: Int = R.drawable.baseline_smart_toy_24,
-//    configuration: Configuration = LocalConfiguration.current
-//){
-//    val scale = remember { mutableStateOf(1f) }
-//    val rotationState = remember { mutableStateOf(1f) }
-//    Box(
-//        modifier = modifier
-//            .clip(RectangleShape)
-//            .background(color = MaterialTheme.colors.background)
-//            .border(1.dp, if (isSystemInDarkTheme()) Color.White else Color.Black)
-//            .size(height = configuration.screenHeightDp.dp, width = configuration.screenWidthDp.dp)
-//            .pointerInput(Unit) {
-//                detectTransformGestures { _, _, zoom, rotation ->
-//                    scale.value *= zoom
-//                    rotationState.value += rotation
-//                }
-//            }
-//    ){
-//        Image(
-//            modifier = modifier
-//                .align(Alignment.Center)
-//                .fillMaxSize()
-//                .graphicsLayer(
-//                    scaleX = maxOf(.5f, minOf(3f, scale.value)),
-//                    scaleY = maxOf(.5f, minOf(3f, scale.value)),
-//                    rotationZ = rotationState.value
-//                ),
-//            contentDescription = "Zoom Image",
-//            contentScale = ContentScale.Fit,
-//            painter = painterResource(id = image)
-//        )
-//    }
-//}
 /** ----------PREVIEWS---------- **/
 @Preview(showBackground = true)
 @Composable
