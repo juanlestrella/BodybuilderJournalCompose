@@ -124,6 +124,9 @@ dependencies {
     implementation "androidx.camera:camera-lifecycle:$camerax_version"
     implementation "androidx.camera:camera-view:$camerax_version"
 
+    // Icons
+    implementation "androidx.compose.material:material-icons-extended:$compose_ui_version"
+
 }
     // Allow references to generated code
     kapt {
