@@ -41,6 +41,7 @@ class MainActivity : ComponentActivity() {
     ){ isGranted ->
         if(isGranted){
             Log.i("Camera Permission", "Permission Granted")
+            shouldShowCamera.value = true
         } else {
             Log.i("Camera Permission", "Permission Denied")
         }
@@ -48,12 +49,18 @@ class MainActivity : ComponentActivity() {
 
     private fun requestCameraPermission(){
         when{
-            ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
-                    == PackageManager.PERMISSION_GRANTED -> {
-                        Log.i("Permission", "Permission Previously Granted")
-                    }
-            ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.CAMERA)
-                    -> Log.i("Permission", "Show camera permissions dialog")
+            ContextCompat.checkSelfPermission(
+                this, android.Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                Log.i("Permission", "Permission Previously Granted")
+                shouldShowCamera.value = true
+            }
+
+            ActivityCompat.shouldShowRequestPermissionRationale(
+                this,
+                android.Manifest.permission.CAMERA
+            ) -> Log.i("Permission", "Show camera permissions dialog")
+
             else -> requestPermissionLauncher.launch(android.Manifest.permission.CAMERA)
         }
     }
@@ -94,13 +101,13 @@ class MainActivity : ComponentActivity() {
                     executor = cameraExecutor,
                     onImageCaptured = ::handleImageCapture,
                     onError = {Log.e("Camera View", "View error:", it)})
-                if (shouldShowPhoto.value){
-                    Image(
-                        painter = rememberAsyncImagePainter(photoUri),
-                        contentDescription = null,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                }
+            }
+            if (shouldShowPhoto.value){
+                Image(
+                    painter = rememberAsyncImagePainter(photoUri),
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize()
+                )
             }
 //            Bodybuilder {
 //                val scaffoldState = rememberScaffoldState()
