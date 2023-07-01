@@ -70,8 +70,16 @@ fun AddBodyContent(
             }
             Button( onClick = { launcher.launch("image/*") }
             ){
-                Text(text = "Pick Images")
+                Text(text = "Gallery")
                 (1..selectedImages.size).forEach { _ -> imagesCaption.add("") }
+            }
+            /**
+             * TODO:
+             * 1) Navigate to CameraView
+             * 2) Add caption per photo
+             */
+            Button(onClick = {}) {
+                Text(text = "Camera")
             }
             Button(
                 onClick = {

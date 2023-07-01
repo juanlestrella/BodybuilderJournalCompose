@@ -2,6 +2,7 @@ package com.example.bodybuilder.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -11,25 +12,27 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.bodybuilder.compose.*
 import com.example.bodybuilder.ui.theme.Bodybuilder
+import java.io.File
+import java.util.concurrent.ExecutorService
 
 @Composable
 fun AppNavHost(
     modifier: Modifier,
     navController: NavHostController,
     startDestination: String = "home",
+    shouldShowCamera: State<Boolean>,
+    executor: ExecutorService,
+    directory: File,
 ){
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = startDestination
+        startDestination = startDestination,
     ){
         composable("home") {
             HomeScreen(
                 modifier = modifier
             )
-        }
-        composable("add"){
-            AddScreen(modifier = modifier)
         }
         composable("diary") {
             DiaryScreen(
@@ -38,6 +41,16 @@ fun AppNavHost(
                 onNavigateToBodyFat = { navController.navigate("bodyFat") },
                 onNavigateToDailyCalorie = { navController.navigate("dailyCalorie") },
                 onNavigateToMacros = { navController.navigate("macros") },
+            )
+        }
+        composable("add"){
+            AddScreen(modifier = modifier)
+        }
+        composable("camera"){
+            CameraViewScreen(
+                shouldShowCamera = shouldShowCamera,
+                executor = executor,
+                directory = directory
             )
         }
         composable("bmi") {
@@ -63,13 +76,13 @@ fun AppNavHost(
     }
 }
 
-@Preview
-@Composable
-fun NavHostPreview(){
-    Bodybuilder {
-        AppNavHost(
-            modifier = Modifier,
-            navController = rememberNavController()
-        )
-    }
-}
+//@Preview
+//@Composable
+//fun NavHostPreview(){
+//    Bodybuilder {
+//        AppNavHost(
+//            modifier = Modifier,
+//            navController = rememberNavController()
+//        )
+//    }
+//}
